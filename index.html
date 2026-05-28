@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📚 Бібліотека ресурсів</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Sora:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Sora:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -23,8 +24,8 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
 /* ── AURORA ── */
-.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.3;animation:drift 28s ease-in-out infinite}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict}
+.orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.3;animation:drift 28s ease-in-out infinite;will-change:transform;contain:layout style}
 .orb1{width:700px;height:700px;background:radial-gradient(circle,#7c3aed,transparent);top:-250px;left:-200px;animation-duration:30s}
 .orb2{width:550px;height:550px;background:radial-gradient(circle,#0891b2,transparent);top:35%;right:-200px;animation-delay:-9s;animation-duration:24s}
 .orb3{width:650px;height:650px;background:radial-gradient(circle,#db2777,transparent);bottom:-150px;left:25%;animation-delay:-17s;animation-duration:34s}
@@ -68,7 +69,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(14,17,32,.78);backdrop-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:15px;padding-bottom:80px}
 
 /* ── CARD ── */
-.card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:11px;transition:transform .3s cubic-bezier(.23,1,.32,1),box-shadow .3s,background .2s,border-color .2s;position:relative;overflow:hidden;animation:cin .45s ease both;will-change:transform}
+.card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:11px;transition:transform .3s cubic-bezier(.23,1,.32,1),box-shadow .3s,background .2s,border-color .2s;position:relative;overflow:hidden;animation:cin .45s ease both}
 .card:hover{background:var(--surface-h);border-color:var(--border-h);border-left-color:var(--ac);transform:translateY(-5px);box-shadow:0 20px 55px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06)}
 @keyframes cin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
@@ -122,6 +123,18 @@ header{position:sticky;top:0;z-index:100;background:rgba(14,17,32,.78);backdrop-
 
 /* ── FOOTER ── */
 footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-top:1px solid var(--border);color:var(--text-3);font-size:12.5px}
+
+/* ── MOBILE PERFORMANCE ── */
+@media(max-width:768px){
+  .orb{filter:blur(60px);opacity:.2;animation:none}
+  header{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .card{animation:none;opacity:1;transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .orb{animation:none}
+  .htitle{animation:none}
+  .card{animation:none}
+}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
