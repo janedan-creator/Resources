@@ -148,6 +148,34 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
 .tg-btn{display:inline-flex;align-items:center;gap:8px;background:#2563eb;border:none;border-radius:40px;padding:12px 24px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#fff;text-decoration:none;cursor:pointer;transition:all .2s;margin-top:16px}
 .tg-btn:hover{background:#1d4ed8;transform:translateY(-1px)}
 
+/* ── JOB TRACKER ── */
+.tk-overlay{position:fixed;inset:0;z-index:210;background:rgba(0,0,0,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .2s}
+.tk-overlay.on{display:flex;opacity:1}
+.tk-box{background:rgba(12,12,24,.97);border:1px solid rgba(255,255,255,.12);border-radius:22px;width:100%;max-width:1120px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;animation:min .28s cubic-bezier(.23,1,.32,1)}
+.tk-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border)}
+.tk-head h2{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;color:#fff}
+.tk-close{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border);color:var(--text-2);font-size:13px;cursor:pointer;flex-shrink:0}
+.tk-close:hover{background:rgba(255,255,255,.14);color:#fff}
+.tk-toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:13px 24px;border-bottom:1px solid var(--border)}
+.tk-btn{background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:40px;padding:7px 15px;font-size:12.5px;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.tk-btn:hover{background:rgba(255,255,255,.14)}
+.tk-btn.primary{background:linear-gradient(135deg,#7c3aed,#2563eb);border:none;color:#fff;font-weight:600}
+.tk-btn.danger:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#fca5a5}
+.tk-btn input{display:none}
+.tk-tablewrap{overflow:auto;flex:1;padding:0 24px}
+.tk-table{width:100%;border-collapse:collapse;min-width:900px;margin:14px 0}
+.tk-table th{text-align:left;padding:8px 10px;font-size:10.5px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#0c0c18;z-index:2}
+.tk-table td{padding:4px 5px;border-bottom:1px solid rgba(255,255,255,.05)}
+.tk-table input,.tk-table select{width:100%;background:rgba(255,255,255,.04);border:1px solid transparent;border-radius:8px;padding:7px 9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12.5px;outline:none;transition:all .15s}
+.tk-table input:focus,.tk-table select:focus{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
+.tk-table input::placeholder{color:var(--text-3)}
+.tk-table select{cursor:pointer;font-weight:600}
+.tk-table select option{background:#16162a;color:#fff;font-weight:500}
+.tk-del{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;width:30px;height:32px;color:var(--text-3);cursor:pointer;font-size:12px;transition:all .15s}
+.tk-del:hover{background:rgba(239,68,68,.2);color:#fca5a5;border-color:rgba(239,68,68,.4)}
+.tk-empty{text-align:center;color:var(--text-3);padding:44px 20px;font-size:13px}
+.tk-hint{padding:12px 24px;font-size:11.5px;color:var(--text-3);border-top:1px solid var(--border);line-height:1.5}
+
 /* ── MOBILE PERFORMANCE ── */
 @media(max-width:768px){
   .orb{filter:blur(60px);opacity:.2;animation:none}
@@ -191,9 +219,9 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
     <h1 class="htitle">Бібліотека<br>ресурсів</h1>
     <p class="hsub">Перевірені матеріали для розвитку, кар'єри та добробуту — зібрані в одному місці</p>
     <div class="hstats">
-      <span class="stat">79 ресурсів</span>
+      <span class="stat">86 ресурсів</span>
       <span class="stat">12 розділів</span>
-      <span class="stat">13 гайдів</span>
+      <span class="stat">18 гайдів</span>
     </div>
   </section>
 
@@ -233,6 +261,31 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
 </div>
 
 <button class="suggest-fab" id="suggestBtn">💌 Запропонувати ресурс</button>
+
+<div class="tk-overlay" id="tkOverlay">
+  <div class="tk-box">
+    <div class="tk-head">
+      <h2>📊 Трекер відгуків на вакансії</h2>
+      <button class="tk-close" id="tkClose">✕</button>
+    </div>
+    <div class="tk-toolbar">
+      <button class="tk-btn primary" onclick="tkAdd()">+ Додати рядок</button>
+      <button class="tk-btn" onclick="tkExport()">⬇ Експорт CSV</button>
+      <label class="tk-btn">⬆ Імпорт CSV<input type="file" accept=".csv" onchange="tkImport(event)"></label>
+      <button class="tk-btn danger" onclick="tkClear()">🗑 Очистити все</button>
+    </div>
+    <div class="tk-tablewrap">
+      <table class="tk-table">
+        <thead><tr>
+          <th>Вакансія</th><th>Зарплата</th><th>Компанія</th><th>Статус</th>
+          <th>Дата подачі</th><th>Посилання</th><th>Нотатки</th><th></th>
+        </tr></thead>
+        <tbody id="tkBody"></tbody>
+      </table>
+    </div>
+    <p class="tk-hint">💾 Дані зберігаються у твоєму браузері на цьому пристрої. Натисни «Експорт CSV» щоб відкрити таблицю в Excel або Google Sheets і забрати з собою.</p>
+  </div>
+</div>
 
 <script>
 const SEC={
@@ -395,6 +448,105 @@ const GUIDES={
     <li>Май фінансову подушку на 3–6 місяців</li></ul>
     <h2>Реалістичні очікування</h2>
     <p>На вході в нову сферу можливий тимчасовий крок назад у зарплаті — це інвестиція, а не поразка. Нетворкінг для світчера часто працює краще за холодні відгуки.</p>`},
+  nojob:{title:'🔎 Де шукати роботу без досвіду',html:`
+    <h1>🔎 Де шукати роботу без досвіду</h1>
+    <p>«Без досвіду» — не вирок. Є місця й фільтри, де першу роботу шукати реально.</p>
+    <h2>Конкретні точки входу</h2><ul>
+    <li><a href="https://jobs.dou.ua/first-job/" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">DOU · Перша робота</a> — окремий розділ саме з вакансіями для початківців у IT</li>
+    <li><a href="https://happymonday.ua/jobs-search" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">Happy Monday</a> — у фільтрах є рівень «без досвіду / Junior»</li>
+    <li><a href="https://djinni.co" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">Djinni</a> — фільтр за досвідом «0 років», можна відгукуватись анонімно</li></ul>
+    <h2>За якими словами шукати</h2>
+    <p>Trainee · Junior · Стажування · Intern · Graduate program · Початківець · Асистент. У великих компаніях стажування — окремий набір, де брак досвіду очікуваний.</p>
+    <h2>Що вважається досвідом</h2><ul>
+    <li class=ci>Навчальні, курсові та пет-проєкти, дипломна</li>
+    <li class=ci>Фріланс, разові й волонтерські замовлення</li>
+    <li class=ci>Студентські організації, хакатони, конкурси</li>
+    <li class=ci>Курси з реальним результатом — проєкт, кейс, сертифікат</li></ul>
+    <div class="note green">Подавайся, навіть якщо відповідаєш на ~60–70% вимог. «Бажано» ≠ «обов'язково».</div>`},
+  employerrf:{title:'🚩 Червоні прапорці роботодавця',html:`
+    <h1>🚩 Червоні прапорці з боку роботодавця</h1>
+    <p>Поки ти намагаєшся сподобатись компанії, вона теж показує себе — просто не напряму. Співбесіда двостороння: ти теж обираєш.</p>
+    <h2>На що звертати увагу</h2><ul>
+    <li class=ri>Ухильні відповіді про гроші, обов'язки чи умови — прозорість це базовий мінімум</li>
+    <li class=ri>Токсичність ховається за нейтральними фразами й корпоративним оптимізмом</li>
+    <li class=ri>Безлад у комунікації, перенесення, суперечливі повідомлення під час найму — далі не зникне</li>
+    <li class=ri>«Ми як сім'я», «у нас драйв і ненормований день» — часто маркери переробок</li>
+    <li class=ri>Тиск прийняти офер «прямо зараз»</li>
+    <li class=ri>Велике неоплачуване тестове завдання</li></ul>
+    <h2>Питай — і дивись на реакцію</h2><ul>
+    <li>Чому відкрита ця вакансія? Що сталося з попередником?</li>
+    <li>Яка плинність кадрів у команді?</li>
+    <li>Як оцінюється результат, як дають зворотний зв'язок?</li></ul>
+    <p>Реакція на конкретне запитання скаже більше за будь-який відгук в інтернеті.</p>
+    <h2>Перевір заздалегідь</h2>
+    <p>Glassdoor, LinkedIn, DOU.ua — відгуки про компанію ще до першої зустрічі.</p>
+    <div class="note purple">Якщо прапорці зʼявились уже після виходу — дай собі 30–45 днів, щоб відрізнити звичайний стрес адаптації від системних проблем.</div>`},
+  resumecheck:{title:'📄 Як перевірити резюме',html:`
+    <h1>📄 Як перевірити резюме перед надсиланням</h1>
+    <p>Резюме формує перше враження. Помилки типові — і легко виправні. Чекліст перед відправкою:</p>
+    <h2>1. Зроби унікальним під вакансію</h2>
+    <p>Не шли однакове резюме всюди. Підкресли саме той досвід і навички, які зазначені в оголошенні — щоб твоя відповідність умовам читалась одразу.</p>
+    <h2>2. Здобутки, а не лише обов'язки</h2>
+    <p>Замість переліку обов'язків — що вдалося досягти: підняв продажі, відділ виріс з 2 до 10 людей, проєкт отримав нагороду. Не соромся ділитися результатами.</p>
+    <h2>3. Перевір на помилки</h2>
+    <p>Орфографія й граматика (онлайн-сервіси перевірки), час дієслів (минула робота — минулий час, поточна — теперішній), єдиний стиль скорочень по всьому документу.</p>
+    <h2>4. Перевір локацію</h2>
+    <p>Якщо вакансія в офіс у конкретному місті, а ти в іншому, але готовий до переїзду — зазнач це в супровідному листі.</p>
+    <h2>5. Залиш тільки правду</h2>
+    <p>Сумнівні навички краще прибрати — на співбесіді легко перевірять рівень англійської чи знання ПЗ.</p>
+    <h2>6. Тільки головні контакти</h2>
+    <p>Не вказуй усі соцмережі й пошти — лише ті, якими реально користуєшся.</p>
+    <a class="tg-btn" href="https://bf.diia.gov.ua/articles/yak-pereviriti-rezyume-instrukciya" target="_blank" rel="noopener">Повна стаття на Дія.Безбар'єрність →</a>`},
+  trainers:{title:'🎤 Тренажери для співбесід',html:`
+    <h1>🎤 Онлайн-тренажери для співбесід</h1>
+    <p>Вміння проходити інтерв'ю — навичка, яку можна тренувати самостійно. Сервіси аналізують не лише що ти кажеш, а й як: темп, інтонацію, повтори.</p>
+    <ul>
+    <li><a href="https://t.me/TheInterviewerBot" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline"><strong>The Interviewer Bot</strong></a> — україномовний Telegram-бот від наших розробників. Питання за напрямами: Business Analyst, Manual QA, Project Manager, Soft Skills. Безкоштовно для українців</li>
+    <li><a href="https://yoodli.ai" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline"><strong>Yoodli</strong></a> — AI-коуч мовлення: записуєш відповідь і отримуєш аналіз темпу, слів-паразитів, чіткості</li>
+    <li><a href="https://www.tryexponent.com/practice" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline"><strong>Exponent (Pramp)</strong></a> — безкоштовні мок-інтерв'ю в парі з іншою людиною</li>
+    <li><a href="https://interviewing.io" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline"><strong>interviewing.io</strong></a> — анонімні технічні мок-співбесіди з інженерами</li>
+    <li><a href="https://huru.ai" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline"><strong>Huru</strong></a> — застосунок з AI-питаннями під конкретну вакансію і миттєвим фідбеком</li></ul>
+    <div class="note green">Більшість тренажерів англомовні, але корисні й для україномовних — вони оцінюють подачу, яку дивиться й реальний рекрутер.</div>`},
+  jobprompts:{title:'🤖 AI-промпти для пошуку роботи',html:`
+    <h1>🤖 AI-промпти для пошуку роботи</h1>
+    <p>Копіюй, підставляй свої дані у [дужки] і став у ChatGPT / Claude / Gemini.</p>
+    <h2>1. Дослідити зарплати</h2>
+    <div class=code>Ти аналітик ринку праці. Я [посада] рівня [junior/middle/senior] у [місто/країна або «віддалено»], сфера [галузь].
+Дай орієнтовну вилку зарплат для схожих вакансій цього рівня: мінімум, медіана, максимум.
+Окремо познач, що впливає на верхню межу і які суміжні ролі оплачуються вище.</div>
+    <h2>2. Оцінити резюме і дати фідбек</h2>
+    <div class=code>Ти досвідчений рекрутер. Ось моє резюме: [вставити текст].
+[Якщо під вакансію:] Ось вакансія: [вставити опис].
+Оціни резюме за пунктами: відповідність вакансії, сильні місця, що зайве, що додати.
+Дай конкретні переписані формулювання для 3 найслабших рядків. Без води.</div>
+    <h2>3. Слабкі сторони і що покращити</h2>
+    <div class=code>Ти кар'єрний консультант. Ось мій досвід і навички: [вставити].
+Моя ціль — [бажана роль].
+Назви мої слабкі сторони відверто, поясни чому це бар'єр для цілі,
+і дай покроковий план що підтягнути за 1–3 місяці з конкретними діями.</div>
+    <div class="note purple">Завжди перевіряй цифри й факти від AI — він може помилятись у зарплатах. Звіряй з Jooble Salary, DOU, оголошеннями.</div>`},
+  jobchecklist:{title:'✅ Чекліст: як знайти роботу',html:`
+    <h1>✅ Чекліст: як шукати і знайти роботу</h1>
+    <p>15 кроків від цілі до офера. Проходь послідовно — кожен крок підсилює наступний.</p>
+    <h2>Підготовка</h2><ul>
+    <li class=ci>Постав ціль: яка роль, рівень, формат, бажана вилка</li>
+    <li class=ci>Досліди ринок: попит, зарплати, вимоги (DOU, Jooble Salary)</li>
+    <li class=ci>Посиль експертність: закрий 1–2 ключові прогалини в навичках</li>
+    <li class=ci>Онови резюме й портфоліо під ціль</li>
+    <li class=ci>Оформи соцмережі: LinkedIn-профіль, «Open to work»</li></ul>
+    <h2>Стратегія пошуку</h2><ul>
+    <li class=ci>Визнач стратегію: скільки відгуків на тиждень, які компанії</li>
+    <li class=ci>Склади перелік каналів: джоб-борди, нетворкінг, прямі звернення</li>
+    <li class=ci>Підготуй шаблон супровідного листа (адаптуєш під кожну)</li></ul>
+    <h2>Активна фаза</h2><ul>
+    <li class=ci>Аналізуй вакансії: відповідність, червоні прапорці</li>
+    <li class=ci>Відгукуйся — адаптуючи резюме під кожну</li>
+    <li class=ci>Нагадуй про себе рекрутерам, веди табличку відгуків</li>
+    <li class=ci>Готуйся до інтерв'ю: компанія, питання, тренажери</li>
+    <li class=ci>Проходь співбесіди</li></ul>
+    <h2>Після</h2><ul>
+    <li class=ci>Роби ретроспективу: що спрацювало, що ні</li>
+    <li class=ci>Аналізуй офер: не лише зарплата — умови, ріст, команда</li></ul>`},
   aitrust:{title:'🔍 Як не дати AI себе обдурити',html:`
     <h1>🔍 Як не дати AI себе обдурити</h1>
     <p>AI звучить впевнено навіть коли помиляється. <strong style="color:#f0f0f8">Впевнений тон ≠ правда.</strong></p>
@@ -476,7 +628,7 @@ const RES=[
   {s:'jobs',l:'ua',n:'Lobby X',url:'https://thelobbyx.com',t:['пошук роботи','українською'],f:'сайт',p:'безкоштовно',d:'Рекрутингова платформа з фокусом на розвиток України — вакансії у бізнесі, стартапах та міжнародних структурах.'},
   {s:'jobs',l:'ua',n:'DOU Jobs',url:'https://jobs.dou.ua',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найбільша IT-спільнота України — вакансії у tech, зарплатний калькулятор, рейтинги компаній та відгуки розробників.'},
   {s:'jobs',l:'ua',n:'Prostir.ua — НУО та міжнародні організації',url:'https://www.prostir.ua/category/jobs/',t:['пошук роботи','гранти','волонтерство'],f:'сайт',p:'безкоштовно',d:'Вакансії у НУО, міжнародних організаціях та третьому секторі — UNICEF, USAID, ООН, місцеві громадські організації.'},
-  {s:'jobs',l:'en',n:'Djinni',url:'https://djinni.co',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найкращий джоб-борд для IT в Україні — анонімний пошук, відгук без резюме, прямий контакт з компанією.'},
+  {s:'jobs',l:'ua',n:'Djinni',url:'https://djinni.co',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найкращий джоб-борд для IT в Україні — анонімний пошук, відгук без резюме, прямий контакт з компанією.'},
   {s:'jobs',l:'en',n:'LinkedIn',url:'https://linkedin.com',t:['пошук роботи','нетворкінг','резюме'],f:'сайт',p:'безкоштовно',d:'Глобальна кар\'єрна мережа — пошук роботи, нетворкінг з рекрутерами, рекомендації. Must-have профіль.'},
   {s:'jobs',l:'en',n:'Relocate.me',url:'https://relocate.me',t:['пошук роботи','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Вакансії з релокацією по всьому світу — фільтр по країні, візовій підтримці та галузі.'},
   {s:'jobs',l:'en',n:'Novoresume',url:'https://novoresume.com',t:['резюме','для початківців'],f:'сайт',p:'частково',d:'Зручний конструктор резюме з ATS-сумісними шаблонами — є безкоштовний базовий варіант.'},
@@ -494,6 +646,14 @@ const RES=[
   {s:'it',l:'en',n:'Meta Blueprint',url:'https://facebook.com/business/learn',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Офіційне навчання та сертифікація з digital-маркетингу від Meta — визнається глобально.'},
   {s:'jobs',l:'ua',n:'🚀 Перша робота: від нуля до офера',g:'firstjob',t:['пошук роботи','для початківців'],f:'гайд',p:'безкоштовно',d:'Що вважається досвідом, куди дивитися, як скласти резюме без досвіду і що робити в перші 90 днів.'},
   {s:'jobs',l:'ua',n:'🔄 Зміна кар\'єри: гайд для світчерів',g:'switcher',t:['пошук роботи'],f:'гайд',p:'безкоштовно',d:'Як зрозуміти що переноситься, обрати напрямок не за хайпом і збудувати міст, а не стрибати в прірву.'},
+  {s:'jobs',l:'ua',n:'Jooble — зарплати',url:'https://ua.jooble.org/salary',t:['пошук роботи','українською'],f:'інструмент',p:'безкоштовно',d:'Перевірити середню зарплату за посадою в Україні — корисно для дослідження ринку і перемовин про офер.'},
+  {s:'jobs',l:'ua',n:'📊 Трекер відгуків на вакансії',tk:true,t:['пошук роботи','для початківців'],f:'трекер',p:'безкоштовно',d:'Відстежуй усі відгуки в одному місці: вакансія, зарплата, компанія, статус, дата, посилання, нотатки. Зберігається в браузері + експорт у CSV/Excel.'},
+  {s:'jobs',l:'ua',n:'🔎 Де шукати роботу без досвіду',g:'nojob',t:['пошук роботи','для початківців'],f:'гайд',p:'безкоштовно',d:'Конкретні розділи й фільтри для першої роботи (DOU, Happy Monday, Djinni), за якими словами шукати і що вважається досвідом.'},
+  {s:'jobs',l:'ua',n:'🚩 Червоні прапорці роботодавця',g:'employerrf',t:['співбесіда','пошук роботи'],f:'гайд',p:'безкоштовно',d:'Як розпізнати токсичну компанію ще на співбесіді: ухильні відповіді, маркери переробок, які питання ставити і де перевірити.'},
+  {s:'jobs',l:'ua',n:'📄 Як перевірити резюме',g:'resumecheck',t:['резюме','для початківців'],f:'гайд',p:'безкоштовно',d:'6 кроків перед надсиланням: унікальність під вакансію, здобутки замість обов\'язків, помилки, локація, правдивість. За матеріалами Дія.'},
+  {s:'jobs',l:'ua',n:'🎤 Тренажери для співбесід',g:'trainers',t:['співбесіда'],f:'гайд',p:'безкоштовно',d:'5 онлайн-сервісів для практики інтерв\'ю з посиланнями — від україномовного Telegram-бота до AI-коучів мовлення.'},
+  {s:'jobs',l:'ua',n:'🤖 AI-промпти для пошуку роботи',g:'jobprompts',t:['пошук роботи','AI','резюме'],f:'гайд',p:'безкоштовно',d:'3 готові промпти: дослідити зарплати, оцінити резюме під вакансію, проаналізувати слабкі сторони і план їх підтягнути.'},
+  {s:'jobs',l:'ua',n:'✅ Чекліст: як знайти роботу',g:'jobchecklist',t:['пошук роботи','для початківців'],f:'гайд',p:'безкоштовно',d:'15 кроків від цілі до офера: підготовка, стратегія пошуку, активна фаза, ретроспектива та аналіз оферу.'},
   // AI — нові гайди
   {s:'ai',l:'en',n:'Learn Prompting',url:'https://learnprompting.org',t:['AI','для початківців'],f:'сайт',p:'безкоштовно',d:'Найповніший безкоштовний гайд з промпт-інжинірингу — від базового до просунутого рівня.'},
   {s:'ai',l:'en',n:'Google AI Essentials',url:'https://grow.google/ai-essentials',t:['AI','сертифікат'],f:'курс',p:'платно',d:'Практичний курс від Google — як використовувати AI ефективно в роботі. Дає міжнародний сертифікат.'},
@@ -621,7 +781,9 @@ function buildCards(){
     const sec=SEC[r.s];
     const pc=r.p==='безкоштовно'?'bfree':r.p==='частково'?'bpart':'bpaid';
     const lang=r.l==='ua'?'<span class="b blang">укр</span>':'<span class="b blang">eng</span>';
-    const btn=r.g
+    const btn=r.tk
+      ?`<button class="cbtn" onclick="tkOpen()">Відкрити трекер ↗</button>`
+      :r.g
       ?`<button class="cbtn" onclick="openG('${r.g}')">Відкрити гайд ↗</button>`
       :`<a class="cbtn" href="${r.url}" target="_blank" rel="noopener">Перейти →</a>`;
     return `<div class="card" style="--ac:${sec.color};animation-delay:${i*.035}s">
