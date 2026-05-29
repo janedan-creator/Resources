@@ -25,7 +25,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 /* ── AURORA ── */
 .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict}
-.orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.3;animation:drift 28s ease-in-out infinite;will-change:transform;contain:layout style}
+.orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.3;animation:drift 28s ease-in-out infinite;will-change:transform;transform:translateZ(0)}
 .orb1{width:700px;height:700px;background:radial-gradient(circle,#7c3aed,transparent);top:-250px;left:-200px;animation-duration:30s}
 .orb2{width:550px;height:550px;background:radial-gradient(circle,#0891b2,transparent);top:35%;right:-200px;animation-delay:-9s;animation-duration:24s}
 .orb3{width:650px;height:650px;background:radial-gradient(circle,#db2777,transparent);bottom:-150px;left:25%;animation-delay:-17s;animation-duration:34s}
@@ -66,30 +66,48 @@ header{position:sticky;top:0;z-index:100;background:rgba(14,17,32,.78);backdrop-
 .rinfo{text-align:center;font-size:12.5px;color:var(--text-3);margin-bottom:20px;min-height:18px}
 
 /* ── GRID ── */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:15px;padding-bottom:80px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));column-gap:15px;row-gap:28px;padding-bottom:80px;padding-top:22px}
 
-/* ── CARD ── */
-.card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:11px;transition:transform .3s cubic-bezier(.23,1,.32,1),box-shadow .3s,background .2s,border-color .2s;position:relative;overflow:hidden;animation:cin .45s ease both}
-.card:hover{background:var(--surface-h);border-color:var(--border-h);border-left-color:var(--ac);transform:translateY(-5px);box-shadow:0 20px 55px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06)}
-@keyframes cin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+/* ── CARD (folder design) ── */
+.card{
+  background:linear-gradient(150deg, color-mix(in srgb,var(--ac) 50%,white) 0%, var(--ac) 60%, color-mix(in srgb,var(--ac) 88%,black) 100%);
+  border:none;
+  border-radius:3px 18px 18px 18px;
+  padding:20px;
+  display:flex;flex-direction:column;gap:10px;
+  transition:transform .25s cubic-bezier(.23,1,.32,1),box-shadow .25s,filter .2s;
+  position:relative;overflow:visible;
+  animation:cin .35s ease both;
+  contain:layout style;
+}
+.card::before{
+  content:'';position:absolute;top:-13px;left:0;
+  width:50%;max-width:120px;height:15px;
+  background:color-mix(in srgb,var(--ac) 70%,black);
+  border-radius:8px 8px 0 0;
+  clip-path:polygon(0 0, 72% 0, 100% 100%, 0 100%);
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 52px rgba(0,0,0,.38);filter:brightness(1.07)}
+@keyframes cin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 .ctop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.cicon{font-size:20px;line-height:1;flex-shrink:0}
+.cicon{font-size:22px;line-height:1;flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.25))}
 .cbadges{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-.b{font-size:10.5px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap}
-.bfmt{background:rgba(255,255,255,.07);color:var(--text-2);border:1px solid var(--border)}
-.bfree{background:rgba(16,185,129,.18);color:#86efac;border:1px solid rgba(16,185,129,.28)}
-.bpart{background:rgba(234,179,8,.18);color:#fde68a;border:1px solid rgba(234,179,8,.28)}
-.bpaid{background:rgba(239,68,68,.14);color:#fca5a5;border:1px solid rgba(239,68,68,.28)}
+.b{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.bfmt{background:rgba(0,0,0,.2);color:rgba(255,255,255,.8);border:1px solid rgba(0,0,0,.12)}
+.blang{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.28);font-weight:600}
+.bfree{background:rgba(255,255,255,.28);color:#fff;border:1px solid rgba(255,255,255,.38)}
+.bpart{background:rgba(255,255,255,.2);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.3)}
+.bpaid{background:rgba(0,0,0,.22);color:rgba(255,255,255,.82);border:1px solid rgba(0,0,0,.1)}
 
-.ctitle{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;color:var(--text);line-height:1.3}
-.cdesc{font-size:12.5px;color:var(--text-2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.ctitle{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:#fff;line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.22)}
+.cdesc{font-size:12.5px;color:rgba(255,255,255,.82);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
 .ctags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
-.tag{font-size:10.5px;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text-3);cursor:pointer;transition:all .15s}
-.tag:hover{background:rgba(255,255,255,.09);color:var(--text-2)}
-.cfoot{margin-top:auto;padding-top:6px}
-.cbtn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:40px;padding:7px 16px;font-size:12.5px;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--text);text-decoration:none;cursor:pointer;transition:all .2s}
-.cbtn:hover{background:var(--ac);border-color:var(--ac);color:#fff}
+.tag{font-size:10.5px;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.88);cursor:pointer;transition:all .15s}
+.tag:hover{background:rgba(255,255,255,.3);color:#fff}
+.cfoot{margin-top:auto;padding-top:4px}
+.cbtn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:40px;padding:7px 16px;font-size:12.5px;font-family:'DM Sans',sans-serif;font-weight:600;color:#fff;text-decoration:none;cursor:pointer;transition:all .2s}
+.cbtn:hover{background:rgba(255,255,255,.38);border-color:rgba(255,255,255,.55)}
 
 /* ── EMPTY ── */
 .empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-3)}
@@ -124,16 +142,22 @@ header{position:sticky;top:0;z-index:100;background:rgba(14,17,32,.78);backdrop-
 /* ── FOOTER ── */
 footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-top:1px solid var(--border);color:var(--text-3);font-size:12.5px}
 
+/* ── SUGGEST BUTTON ── */
+.suggest-fab{position:fixed;bottom:24px;right:24px;z-index:90;background:linear-gradient(135deg,#7c3aed,#2563eb);border:none;border-radius:40px;padding:11px 20px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 8px 28px rgba(124,58,237,.45);transition:all .25s;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.suggest-fab:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(124,58,237,.55)}
+.tg-btn{display:inline-flex;align-items:center;gap:8px;background:#2563eb;border:none;border-radius:40px;padding:12px 24px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#fff;text-decoration:none;cursor:pointer;transition:all .2s;margin-top:16px}
+.tg-btn:hover{background:#1d4ed8;transform:translateY(-1px)}
+
 /* ── MOBILE PERFORMANCE ── */
 @media(max-width:768px){
   .orb{filter:blur(60px);opacity:.2;animation:none}
   header{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-  .card{animation:none;opacity:1;transform:none}
+  .card{animation:none;opacity:1;transform:none;border-radius:18px}
+  .card::before{display:none}
 }
 @media(prefers-reduced-motion:reduce){
-  .orb{animation:none}
-  .htitle{animation:none}
-  .card{animation:none}
+  .orb,.htitle,.card{animation:none}
+  .card{opacity:1}
 }
 
 /* ── RESPONSIVE ── */
@@ -167,9 +191,9 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
     <h1 class="htitle">Бібліотека<br>ресурсів</h1>
     <p class="hsub">Перевірені матеріали для розвитку, кар'єри та добробуту — зібрані в одному місці</p>
     <div class="hstats">
-      <span class="stat">53 ресурси</span>
-      <span class="stat">9 розділів</span>
-      <span class="stat">5 гайдів</span>
+      <span class="stat">79 ресурсів</span>
+      <span class="stat">12 розділів</span>
+      <span class="stat">13 гайдів</span>
     </div>
   </section>
 
@@ -196,6 +220,20 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
   </div>
 </div>
 
+<div class="mover" id="suggestModal">
+  <div class="mbox">
+    <button class="mclose" id="suggestClose">✕</button>
+    <div class="mc">
+      <h1>💌 Запропонуй ресурс або запит</h1>
+      <p>Знаєш корисний ресурс якого немає в бібліотеці? Хочеш підбірку на певну тему? Або маєш питання — напиши нам.</p>
+      <p>Розглядаємо кожне повідомлення і регулярно оновлюємо бібліотеку.</p>
+      <a class="tg-btn" href="https://t.me/+inZz3vwwfNwxZmNi" target="_blank" rel="noopener">✈️ Написати в Telegram</a>
+    </div>
+  </div>
+</div>
+
+<button class="suggest-fab" id="suggestBtn">💌 Запропонувати ресурс</button>
+
 <script>
 const SEC={
   english:      {label:'🌍 Англійська',   color:'#06b6d4'},
@@ -207,6 +245,9 @@ const SEC={
   finance:      {label:'💰 Фінанси',      color:'#eab308'},
   opps:         {label:'🚀 Можливості',   color:'#ef4444'},
   culture:      {label:'🎭 Культура',      color:'#a855f7'},
+  productivity: {label:'⚡ Продуктивність', color:'#14b8a6'},
+  students:     {label:'🎓 Студентам',      color:'#f472b6'},
+  ukrainian:    {label:'🇺🇦 Українське',     color:'#0ea5e9'},
 };
 
 const GUIDES={
@@ -311,71 +352,207 @@ const GUIDES={
     <tr><td>Зробити презентацію</td><td>Gamma</td></tr>
     <tr><td>Автоматизувати задачу</td><td>Make.com</td></tr>
     <tr><td>Схема з тексту</td><td>Napkin.ai</td></tr></table>`},
+  firstjob:{title:'🚀 Перша робота: від нуля до офера',html:`
+    <h1>🚀 Перша робота: від нуля до офера</h1>
+    <p>Перша робота — це не вершина, а вхід. Завдання — не «знайти ідеальне», а зайти в професію і почати рости.</p>
+    <h2>Якщо «досвіду немає» — він майже завжди є</h2>
+    <p>Досвід — це не лише трудова книжка. У резюме йде:</p><ul>
+    <li>навчальні й курсові проєкти, дипломна робота</li>
+    <li>пет-проєкти, фріланс, разові замовлення</li>
+    <li>волонтерство, студентські організації, хакатони</li>
+    <li>стажування, навіть коротке</li>
+    <li>курси з реальним результатом (проєкт, сертифікат)</li></ul>
+    <h2>Куди дивитися</h2>
+    <p>Шукай за словами <strong style="color:#f0f0f8">trainee / junior / стажування / graduate program</strong>. Великі компанії часто мають окремі стажувальні набори — там брак досвіду очікуваний.</p>
+    <h2>Резюме без досвіду</h2><ul>
+    <li class=ci>Зверху — короткий блок «Про себе» з напрямком і 1–2 сильними сторонами</li>
+    <li class=ci>Навички (hard + інструменти) винось вище за досвід</li>
+    <li class=ci>Проєкти описуй як роботу: задача → що зробив → результат</li>
+    <li class=ri>Не лий води про «відповідальність» без прикладів</li></ul>
+    <h2>Подача — гра чисел</h2><ul>
+    <li>Відгукуйся навіть якщо відповідаєш на ~60–70% вимог. «Бажано» ≠ «обов'язково»</li>
+    <li>5 точкових відгуків з адаптованим резюме &gt; 50 однакових</li>
+    <li>Веди табличку: компанія / дата / статус / контакт</li></ul>
+    <h2>Перші 90 днів</h2>
+    <p>Постав запитання на старті, фіксуй домовленості, проси зворотний зв'язок раніше, ніж тобі його дадуть. Репутація «швидко вчиться і не боїться питати» цінніша за вдавану всезнайність.</p>`},
+  switcher:{title:'🔄 Зміна кар\'єри: гайд для світчерів',html:`
+    <h1>🔄 Зміна кар'єри: гайд для світчерів</h1>
+    <p>Зміна сфери — це не «почати з нуля», а зайти з іншого боку з уже наявним багажем.</p>
+    <h2>Спершу чесне питання</h2>
+    <p>Тобі набридла <strong style="color:#f0f0f8">сфера</strong> — чи конкретне місце / вигорання / токсичний колектив? Друге часто лікується зміною роботи в тій самій галузі або відпочинком.</p>
+    <h2>Що переноситься (transferable skills)</h2><ul>
+    <li>робота з людьми, комунікація, переговори</li>
+    <li>аналітика, робота з даними, таблиці</li>
+    <li>управління проєктами, дедлайнами, бюджетами</li>
+    <li>мови, тексти, презентації</li></ul>
+    <h2>Обирай напрямок головою</h2><ul>
+    <li class=ri>«Усі йдуть в IT/AI» — не причина</li>
+    <li class=gi>Перетин: що цікаво × що виходить × на що є попит</li>
+    <li class=gi>Перед стрибком: поговори з 2–3 людьми зі сфери, пройди безкоштовний вступний курс</li></ul>
+    <h2>Будуй міст, а не стрибай у прірву</h2><ul>
+    <li>Вчися паралельно з поточною роботою, поки можеш</li>
+    <li>Шукай перехідні ролі — де стара сфера × нова</li>
+    <li>Май фінансову подушку на 3–6 місяців</li></ul>
+    <h2>Реалістичні очікування</h2>
+    <p>На вході в нову сферу можливий тимчасовий крок назад у зарплаті — це інвестиція, а не поразка. Нетворкінг для світчера часто працює краще за холодні відгуки.</p>`},
+  aitrust:{title:'🔍 Як не дати AI себе обдурити',html:`
+    <h1>🔍 Як не дати AI себе обдурити</h1>
+    <p>AI звучить впевнено навіть коли помиляється. <strong style="color:#f0f0f8">Впевнений тон ≠ правда.</strong></p>
+    <h2>Що таке галюцинація</h2>
+    <p>Модель може вигадати факт, цитату, джерело, статтю, закон чи цифру — і подати це абсолютно переконливо.</p>
+    <h2>Коли НЕ довіряти без перевірки</h2><ul>
+    <li class=ri>Конкретні факти, дати, статистика, цитати</li>
+    <li class=ri>Юридичні, медичні, фінансові деталі</li>
+    <li class=ri>Назви джерел, посилання, «дослідження показали»</li>
+    <li class=ri>Свіжі події (модель може не знати або вигадати)</li></ul>
+    <h2>Як перевіряти</h2><ul>
+    <li class=ci>Проси посилання й перевіряй, що сторінка реально існує</li>
+    <li class=ci>Звіряй важливі факти з першоджерелом (офіційний сайт, документ)</li>
+    <li class=ci>Для свіжого — Perplexity і все одно перевіряй</li>
+    <li class=ci>Перепитай інакше: суперечливі відповіді = сигнал копнути глибше</li>
+    <li class=ri>Не вставляй відповідь AI у роботу, не звіривши факти</li></ul>
+    <div class="note purple">Правило: AI — чудовий чернетник і помічник, поганий остаточний авторитет. Думаєш ти, AI прискорює.</div>`},
+  aiuse:{title:'🛠 AI у навчанні й роботі',html:`
+    <h1>🛠 AI у навчанні й роботі: робочі сценарії</h1>
+    <p>Не «спитати щось», а використати під конкретну задачу.</p>
+    <h2>Приклади промптів</h2><ul>
+    <li><strong style="color:#f0f0f8">Розібрати тему:</strong> «Поясни [тема] просто на прикладі, потім став мені 3 питання на перевірку»</li>
+    <li><strong style="color:#f0f0f8">Конспект:</strong> дай текст → «Зроби стислий конспект тезами + що варто запам'ятати»</li>
+    <li><strong style="color:#f0f0f8">Підготовка до іспиту:</strong> «Згенеруй 10 запитань з відповідями, від простих до складних»</li>
+    <li><strong style="color:#f0f0f8">Резюме / cover letter:</strong> дай вакансію + досвід → «Адаптуй під цю вакансію, без кліше, до 200 слів»</li>
+    <li><strong style="color:#f0f0f8">Чернетка листа:</strong> «Напиши чернетку, тон діловий і теплий» → далі редагуєш своїми словами</li>
+    <li><strong style="color:#f0f0f8">Мозковий штурм:</strong> «Дай 15 ідей для [задача], різнопланових, навіть неочевидних»</li></ul>
+    <div class="note green">Принцип: дай контекст, постав рамки, попроси формат. Результат редагуй під себе — не здавай «як є».</div>`},
+  aisafe:{title:'🔒 AI безпечно і чесно',html:`
+    <h1>🔒 AI безпечно і чесно</h1>
+    <p>Зручність не скасовує приватності й доброчесності.</p>
+    <h2>Що НЕ варто давати чат-ботам</h2><ul>
+    <li class=ri>Паролі, дані карток, коди з SMS</li>
+    <li class=ri>Персональні дані інших людей</li>
+    <li class=ri>Конфіденційні робочі документи, NDA-матеріали</li>
+    <li class=ri>Медичні/особисті дані, які не хочеш бачити «десь там»</li></ul>
+    <h2>Академічна й професійна доброчесність</h2><ul>
+    <li class=gi>AI як помічник: пояснити, структурувати, перевірити, накидати чернетку</li>
+    <li class=ri>Видавати згенероване за повністю своє там, де це заборонено</li>
+    <li class=gi>Якщо правила дозволяють — зазнач, що використовував AI і як</li>
+    <li class=gi>Завжди перевіряй факти (гайд «Як не дати AI себе обдурити»)</li></ul>
+    <div class="note purple">AI не замінює фахівця в юридичних, медичних і фінансових питаннях — для рішень з наслідками звертайся до людини.</div>`},
+  productivity:{title:'⚡ Система продуктивності з нуля',html:`
+    <h1>⚡ Система продуктивності з нуля — без фанатизму</h1>
+    <p>Мета не «бути продуктивним 24/7», а встигати важливе і не вигоріти.</p><ul>
+    <li><strong style="color:#f0f0f8">Одне місце для всього.</strong> Усі задачі й ідеї — в один інструмент (Todoist/Notion), не в голові й не в 5 чатах</li>
+    <li><strong style="color:#f0f0f8">Календар вирішує, список — ні.</strong> Важливе став слотом у Google Calendar (time-blocking), а не пунктом у нескінченному списку</li>
+    <li><strong style="color:#f0f0f8">Одна головна задача на день.</strong> Спитай зранку: «Що, якщо зробити лише це, зробить день вдалим?»</li>
+    <li><strong style="color:#f0f0f8">Фокус блоками.</strong> 25–50 хв роботи без телефону → перерва. Багатозадачність — міф</li>
+    <li><strong style="color:#f0f0f8">Тижневий огляд (15 хв).</strong> Раз на тиждень: що зроблено, що переноситься, що на наступний тиждень</li>
+    <li><strong style="color:#f0f0f8">Антивигорання.</strong> Відпочинок — частина системи, а не нагорода</li></ul>
+    <div class="note green">Не збирай 10 інструментів одразу. Почни з календаря + списку задач. Решта — за потребою.</div>`},
+  studyguide:{title:'📖 Як вчитися ефективно',html:`
+    <h1>📖 Як вчитися ефективно — що працює за наукою</h1>
+    <p>Більшість вчиться неефективно: перечитує і підкреслює. Це відчувається як навчання, але майже не працює.</p>
+    <h2>Що реально працює</h2><ul>
+    <li><strong style="color:#f0f0f8">Активне пригадування.</strong> Закрий конспект і спробуй відтворити з пам'яті — згадування вчить краще за перечитування</li>
+    <li><strong style="color:#f0f0f8">Інтервальне повторення.</strong> Повторюй з проміжками (день → 3 дні → тиждень). Інструмент: Anki</li>
+    <li><strong style="color:#f0f0f8">Чергування тем.</strong> Міксуй типи задач замість години одного типу</li>
+    <li><strong style="color:#f0f0f8">Пояснення вголос.</strong> Можеш пояснити просто — значить, розумієш. Ні — знайшов прогалину</li></ul>
+    <h2>Студентське виживання</h2><ul>
+    <li class=ci>Великий дедлайн — розбий на маленькі кроки з мікро-дедлайнами</li>
+    <li class=ci>Диплом/курсова — одразу веди джерела в Zotero, не збирай у кінці</li>
+    <li class=ci>Google Scholar і бібліотеки ВНЗ дають легальний доступ до статей</li>
+    <li class=ri>Сон важливіший за нічну зубрьожку: невиспаний мозок не запам'ятовує</li></ul>`},
 };
 
 const RES=[
   // АНГЛІЙСЬКА
-  {s:'english',n:'BBC Learning English',url:'https://bbc.co.uk/learningenglish',t:['англійська','для початківців'],f:'сайт',p:'безкоштовно',d:'Структуровані уроки від BBC — граматика, лексика, аудіювання. Перевірена якість без реєстрації.'},
-  {s:'english',n:'6 Minute English',url:'https://bbc.co.uk/learningenglish/english/features/6-minute-english',t:['англійська'],f:'подкаст',p:'безкоштовно',d:'Короткі тематичні епізоди від BBC — ідеально для практики в навушниках дорогою. 6 хвилин на день.'},
-  {s:'english',n:'italki',url:'https://italki.com',t:['англійська'],f:'сайт',p:'платно',d:'Розмовна практика з носіями мови або вчителями. Є бюджетні варіанти від $5/год — обираєш зручний час.'},
-  {s:'english',n:'Anki',url:'https://apps.ankiweb.net',t:['англійська','для початківців'],f:'додаток',p:'безкоштовно',d:'Картки на основі інтервального повторення — науково обґрунтований спосіб запам\'ятовувати слова.'},
-  {s:'english',n:'IELTS.org',url:'https://ielts.org',t:['англійська','сертифікат','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Офіційний сайт іспиту — безкоштовні зразки завдань, формати тестів, підготовчі матеріали.'},
-  {s:'english',n:'Cambridge English',url:'https://cambridgeenglish.org/learning-english',t:['англійська','сертифікат'],f:'сайт',p:'безкоштовно',d:'Офіційна підготовка до B2 First, C1 Advanced — тести, граматика, словник від Cambridge.'},
+  {s:'english',l:'en',n:'BBC Learning English',url:'https://bbc.co.uk/learningenglish',t:['англійська','для початківців'],f:'сайт',p:'безкоштовно',d:'Структуровані уроки від BBC — граматика, лексика, аудіювання. Перевірена якість без реєстрації.'},
+  {s:'english',l:'en',n:'6 Minute English',url:'https://bbc.co.uk/learningenglish/english/features/6-minute-english',t:['англійська'],f:'подкаст',p:'безкоштовно',d:'Короткі тематичні епізоди від BBC — ідеально для практики в навушниках дорогою. 6 хвилин на день.'},
+  {s:'english',l:'en',n:'italki',url:'https://italki.com',t:['англійська'],f:'сайт',p:'платно',d:'Розмовна практика з носіями мови або вчителями. Є бюджетні варіанти від $5/год — обираєш зручний час.'},
+  {s:'english',l:'en',n:'Anki',url:'https://apps.ankiweb.net',t:['англійська','для початківців'],f:'додаток',p:'безкоштовно',d:'Картки на основі інтервального повторення — науково обґрунтований спосіб запам\'ятовувати слова.'},
+  {s:'english',l:'en',n:'IELTS.org',url:'https://ielts.org',t:['англійська','сертифікат','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Офіційний сайт іспиту — безкоштовні зразки завдань, формати тестів, підготовчі матеріали.'},
+  {s:'english',l:'en',n:'Cambridge English',url:'https://cambridgeenglish.org/learning-english',t:['англійська','сертифікат'],f:'сайт',p:'безкоштовно',d:'Офіційна підготовка до B2 First, C1 Advanced — тести, граматика, словник від Cambridge.'},
   // ПОШУК РОБОТИ
-  {s:'jobs',n:'Work.ua',url:'https://work.ua',t:['пошук роботи','українською','для початківців'],f:'сайт',p:'безкоштовно',d:'Найбільший укр. джоб-борд — стажування, перша робота, конструктор резюме та поради кар\'єрного зростання.'},
-  {s:'jobs',n:'Happy Monday',url:'https://happymonday.ua',t:['пошук роботи','українською'],f:'сайт',p:'безкоштовно',d:'Платформа для тих, хто шукає роботу з цінностями та смислом — вакансії у прогресивних українських компаніях + кар\'єрні матеріали.'},
-  {s:'jobs',n:'Lobby X',url:'https://thelobbyx.com',t:['пошук роботи','українською'],f:'сайт',p:'безкоштовно',d:'Рекрутингова платформа з фокусом на розвиток України — вакансії у бізнесі, стартапах та міжнародних структурах.'},
-  {s:'jobs',n:'DOU Jobs',url:'https://jobs.dou.ua',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найбільша IT-спільнота України — вакансії у tech, зарплатний калькулятор, рейтинги компаній та відгуки розробників.'},
-  {s:'jobs',n:'Prostir.ua — НУО та міжнародні організації',url:'https://www.prostir.ua/category/jobs/',t:['пошук роботи','гранти','волонтерство'],f:'сайт',p:'безкоштовно',d:'Вакансії у НУО, міжнародних організаціях та третьому секторі — UNICEF, USAID, ООН, місцеві громадські організації.'},
-  {s:'jobs',n:'Djinni',url:'https://djinni.co',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найкращий джоб-борд для IT в Україні — анонімний пошук, відгук без резюме, прямий контакт з компанією.'},
-  {s:'jobs',n:'LinkedIn',url:'https://linkedin.com',t:['пошук роботи','нетворкінг','резюме'],f:'сайт',p:'безкоштовно',d:'Глобальна кар\'єрна мережа — пошук роботи, нетворкінг з рекрутерами, рекомендації. Must-have профіль.'},
-  {s:'jobs',n:'Relocate.me',url:'https://relocate.me',t:['пошук роботи','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Вакансії з релокацією по всьому світу — фільтр по країні, візовій підтримці та галузі.'},
-  {s:'jobs',n:'Novoresume',url:'https://novoresume.com',t:['резюме','для початківців'],f:'сайт',p:'частково',d:'Зручний конструктор резюме з ATS-сумісними шаблонами — є безкоштовний базовий варіант.'},
-  {s:'jobs',n:'Jobscan',url:'https://jobscan.co',t:['резюме'],f:'інструмент',p:'частково',d:'Аналізує резюме на відповідність вакансії за ATS-алгоритмом. Показує що додати або прибрати.'},
-  {s:'jobs',n:'Interview Warmup (Google)',url:'https://grow.google/intl/uk_ua/certificates/interview-warmup',t:['співбесіда'],f:'інструмент',p:'безкоштовно',d:'Практика відповідей з AI-аналізом від Google. Є питання під різні напрямки — IT, маркетинг, UX.'},
-  {s:'jobs',n:'Glassdoor',url:'https://glassdoor.com',t:['співбесіда','пошук роботи'],f:'сайт',p:'безкоштовно',d:'Реальні відгуки про компанії від колишніх працівників + питання з реальних співбесід.'},
-  {s:'jobs',n:'HubSpot: Elevator Pitch',url:'https://blog.hubspot.com/sales/elevator-pitch-examples',t:['співбесіда','для початківців'],f:'стаття',p:'безкоштовно',d:'Приклади та структура elevator pitch — як коротко і переконливо розповісти про себе.'},
-  {s:'jobs',n:'✅ Чеклист LinkedIn-профілю',g:'linkedin',t:['нетворкінг','резюме','пошук роботи'],f:'гайд',p:'безкоштовно',d:'Фото, headline, About, досвід, Featured — повний чеклист для профілю що привертає рекрутерів.'},
-  {s:'jobs',n:'✅ Питання на співбесіді',g:'iq',t:['співбесіда'],f:'гайд',p:'безкоштовно',d:'Готові питання що показують зрілість кандидата — про ріст, культуру та очікування.'},
-  {s:'jobs',n:'🚩 Red flags на співбесіді',g:'rf',t:['співбесіда','для початківців'],f:'гайд',p:'безкоштовно',d:'Що видає непідготовленого кандидата і що навпаки підвищує рейтинг у очах рекрутера.'},
+  {s:'jobs',l:'ua',n:'Work.ua',url:'https://work.ua',t:['пошук роботи','українською','для початківців'],f:'сайт',p:'безкоштовно',d:'Найбільший укр. джоб-борд — стажування, перша робота, конструктор резюме та поради кар\'єрного зростання.'},
+  {s:'jobs',l:'ua',n:'Happy Monday',url:'https://happymonday.ua',t:['пошук роботи','українською'],f:'сайт',p:'безкоштовно',d:'Платформа для тих, хто шукає роботу з цінностями та смислом — вакансії у прогресивних українських компаніях + кар\'єрні матеріали.'},
+  {s:'jobs',l:'ua',n:'Lobby X',url:'https://thelobbyx.com',t:['пошук роботи','українською'],f:'сайт',p:'безкоштовно',d:'Рекрутингова платформа з фокусом на розвиток України — вакансії у бізнесі, стартапах та міжнародних структурах.'},
+  {s:'jobs',l:'ua',n:'DOU Jobs',url:'https://jobs.dou.ua',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найбільша IT-спільнота України — вакансії у tech, зарплатний калькулятор, рейтинги компаній та відгуки розробників.'},
+  {s:'jobs',l:'ua',n:'Prostir.ua — НУО та міжнародні організації',url:'https://www.prostir.ua/category/jobs/',t:['пошук роботи','гранти','волонтерство'],f:'сайт',p:'безкоштовно',d:'Вакансії у НУО, міжнародних організаціях та третьому секторі — UNICEF, USAID, ООН, місцеві громадські організації.'},
+  {s:'jobs',l:'en',n:'Djinni',url:'https://djinni.co',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Найкращий джоб-борд для IT в Україні — анонімний пошук, відгук без резюме, прямий контакт з компанією.'},
+  {s:'jobs',l:'en',n:'LinkedIn',url:'https://linkedin.com',t:['пошук роботи','нетворкінг','резюме'],f:'сайт',p:'безкоштовно',d:'Глобальна кар\'єрна мережа — пошук роботи, нетворкінг з рекрутерами, рекомендації. Must-have профіль.'},
+  {s:'jobs',l:'en',n:'Relocate.me',url:'https://relocate.me',t:['пошук роботи','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Вакансії з релокацією по всьому світу — фільтр по країні, візовій підтримці та галузі.'},
+  {s:'jobs',l:'en',n:'Novoresume',url:'https://novoresume.com',t:['резюме','для початківців'],f:'сайт',p:'частково',d:'Зручний конструктор резюме з ATS-сумісними шаблонами — є безкоштовний базовий варіант.'},
+  {s:'jobs',l:'en',n:'Jobscan',url:'https://jobscan.co',t:['резюме'],f:'інструмент',p:'частково',d:'Аналізує резюме на відповідність вакансії за ATS-алгоритмом. Показує що додати або прибрати.'},
+  {s:'jobs',l:'en',n:'Glassdoor',url:'https://glassdoor.com',t:['співбесіда','пошук роботи'],f:'сайт',p:'безкоштовно',d:'Реальні відгуки про компанії від колишніх працівників + питання з реальних співбесід.'},
+  {s:'jobs',l:'en',n:'HubSpot: Elevator Pitch',url:'https://blog.hubspot.com/sales/elevator-pitch-examples',t:['співбесіда','для початківців'],f:'стаття',p:'безкоштовно',d:'Приклади та структура elevator pitch — як коротко і переконливо розповісти про себе.'},
+  {s:'jobs',l:'ua',n:'✅ Чеклист LinkedIn-профілю',g:'linkedin',t:['нетворкінг','резюме','пошук роботи'],f:'гайд',p:'безкоштовно',d:'Фото, headline, About, досвід, Featured — повний чеклист для профілю що привертає рекрутерів.'},
+  {s:'jobs',l:'ua',n:'✅ Питання на співбесіді',g:'iq',t:['співбесіда'],f:'гайд',p:'безкоштовно',d:'Готові питання що показують зрілість кандидата — про ріст, культуру та очікування.'},
+  {s:'jobs',l:'ua',n:'🚩 Red flags на співбесіді',g:'rf',t:['співбесіда','для початківців'],f:'гайд',p:'безкоштовно',d:'Що видає непідготовленого кандидата і що навпаки підвищує рейтинг у очах рекрутера.'},
   // IT
-  {s:'it',n:'Google Career Certificates',url:'https://grow.google/certificates',t:['IT','сертифікат','міжнародне визнання','для початківців'],f:'курс',p:'частково',d:'Сертифікати від Google без вищої освіти: Data Analytics, UX Design, IT Support, Cybersecurity.'},
-  {s:'it',n:'Microsoft Learn',url:'https://learn.microsoft.com',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Офіційне безкоштовне навчання під сертифікації Microsoft: Azure, Power BI, AI Fundamentals.'},
-  {s:'it',n:'AWS Skill Builder',url:'https://skillbuilder.aws',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Безкоштовні курси для підготовки до AWS Cloud Practitioner — найпопулярніша хмарна сертифікація.'},
-  {s:'it',n:'Cisco NetAcad',url:'https://netacad.com',t:['IT','сертифікат','для початківців'],f:'платформа',p:'безкоштовно',d:'Безкоштовні курси з мереж, кібербезпеки, Python від Cisco — добра база для входу в IT.'},
-  {s:'it',n:'Meta Blueprint',url:'https://facebook.com/business/learn',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Офіційне навчання та сертифікація з digital-маркетингу від Meta — визнається глобально.'},
-  // AI
-  {s:'ai',n:'Learn Prompting',url:'https://learnprompting.org',t:['AI','для початківців'],f:'сайт',p:'безкоштовно',d:'Найповніший безкоштовний гайд з промпт-інжинірингу — від базового до просунутого рівня.'},
-  {s:'ai',n:'Google AI Essentials',url:'https://grow.google/ai-essentials',t:['AI','сертифікат'],f:'курс',p:'платно',d:'Практичний курс від Google — як використовувати AI ефективно в роботі. Дає міжнародний сертифікат.'},
-  {s:'ai',n:'Perplexity AI',url:'https://perplexity.ai',t:['AI'],f:'інструмент',p:'безкоштовно',d:'AI-пошук з посиланнями на джерела — замінює Google коли потрібно дослідити тему і перевірити факти.'},
-  {s:'ai',n:'Gamma',url:'https://gamma.app',t:['AI','фріланс'],f:'інструмент',p:'безкоштовно',d:'Створює презентації та документи через AI за лічені хвилини — для навчання і роботи.'},
-  {s:'ai',n:'Make.com',url:'https://make.com',t:['AI','автоматизація'],f:'інструмент',p:'безкоштовно',d:'No-code платформа автоматизацій без програмування — з\'єднує додатки між собою.'},
-  {s:'ai',n:'Projector: AI for Productivity',url:'https://prjctr.com/course/ai-for-personal-productivity',t:['AI','автоматизація'],f:'курс',p:'платно',d:'Практичний курс — AI-інфраструктура для щоденних задач, автоматизація рутини, інтеграція між сервісами.'},
-  {s:'ai',n:'🧠 Як писати промпти',g:'prompts',t:['AI','для початківців'],f:'гайд',p:'безкоштовно',d:'Структура ефективного промпта: Роль → Задача → Контекст → Обмеження → Формат. З шаблоном і прикладами.'},
-  {s:'ai',n:'🗺 Карта AI-інструментів',g:'aimap',t:['AI'],f:'гайд',p:'безкоштовно',d:'4 категорії: Chat-інтерфейси, no-code, спеціалізовані, API — таблиця що коли обирати.'},
-  // КУРСИ
-  {s:'courses',n:'Coursera',url:'https://coursera.org',t:['курси','сертифікат','міжнародне визнання'],f:'платформа',p:'частково',d:'Курси від університетів світу (Yale, Google, IBM). Є фінансова допомога — можна вчитись безкоштовно.'},
-  {s:'courses',n:'edX',url:'https://edx.org',t:['курси','сертифікат','міжнародне визнання'],f:'платформа',p:'частково',d:'Курси від MIT, Harvard, Microsoft. Аудит (перегляд без сертифікату) — безкоштовно.'},
-  {s:'courses',n:'Prometheus',url:'https://prometheus.org.ua',t:['курси','українською','безкоштовно'],f:'платформа',p:'безкоштовно',d:'Українська платформа масових курсів від університетів — від програмування до психології, безкоштовно.'},
-  {s:'courses',n:'Ed-Era',url:'https://ed-era.com',t:['курси','українською'],f:'платформа',p:'безкоштовно',d:'Якісні курси українською — підготовка до ЄВІ, профорієнтація та інші напрямки. Доступно 24/7.'},
-  {s:'courses',n:'NAQA — реєстр програм',url:'https://naqa.gov.ua',t:['курси'],f:'сайт',p:'безкоштовно',d:'Офіційний реєстр акредитованих освітніх програм України — перевірити легітимність закладу.'},
+  {s:'it',l:'en',n:'Google Career Certificates',url:'https://grow.google/certificates',t:['IT','сертифікат','міжнародне визнання','для початківців'],f:'курс',p:'частково',d:'Сертифікати від Google без вищої освіти: Data Analytics, UX Design, IT Support, Cybersecurity.'},
+  {s:'it',l:'en',n:'Microsoft Learn',url:'https://learn.microsoft.com',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Офіційне безкоштовне навчання під сертифікації Microsoft: Azure, Power BI, AI Fundamentals.'},
+  {s:'it',l:'en',n:'AWS Skill Builder',url:'https://skillbuilder.aws',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Безкоштовні курси для підготовки до AWS Cloud Practitioner — найпопулярніша хмарна сертифікація.'},
+  {s:'it',l:'en',n:'Cisco NetAcad',url:'https://netacad.com',t:['IT','сертифікат','для початківців'],f:'платформа',p:'безкоштовно',d:'Безкоштовні курси з мереж, кібербезпеки, Python від Cisco — добра база для входу в IT.'},
+  {s:'it',l:'en',n:'Meta Blueprint',url:'https://facebook.com/business/learn',t:['IT','сертифікат','міжнародне визнання'],f:'платформа',p:'безкоштовно',d:'Офіційне навчання та сертифікація з digital-маркетингу від Meta — визнається глобально.'},
+  {s:'jobs',l:'ua',n:'🚀 Перша робота: від нуля до офера',g:'firstjob',t:['пошук роботи','для початківців'],f:'гайд',p:'безкоштовно',d:'Що вважається досвідом, куди дивитися, як скласти резюме без досвіду і що робити в перші 90 днів.'},
+  {s:'jobs',l:'ua',n:'🔄 Зміна кар\'єри: гайд для світчерів',g:'switcher',t:['пошук роботи'],f:'гайд',p:'безкоштовно',d:'Як зрозуміти що переноситься, обрати напрямок не за хайпом і збудувати міст, а не стрибати в прірву.'},
+  // AI — нові гайди
+  {s:'ai',l:'en',n:'Learn Prompting',url:'https://learnprompting.org',t:['AI','для початківців'],f:'сайт',p:'безкоштовно',d:'Найповніший безкоштовний гайд з промпт-інжинірингу — від базового до просунутого рівня.'},
+  {s:'ai',l:'en',n:'Google AI Essentials',url:'https://grow.google/ai-essentials',t:['AI','сертифікат'],f:'курс',p:'платно',d:'Практичний курс від Google — як використовувати AI ефективно в роботі. Дає міжнародний сертифікат.'},
+  {s:'ai',l:'en',n:'Perplexity AI',url:'https://perplexity.ai',t:['AI'],f:'інструмент',p:'безкоштовно',d:'AI-пошук з посиланнями на джерела — замінює Google коли потрібно дослідити тему і перевірити факти.'},
+  {s:'ai',l:'en',n:'Gamma',url:'https://gamma.app',t:['AI','фріланс'],f:'інструмент',p:'безкоштовно',d:'Створює презентації та документи через AI за лічені хвилини — для навчання і роботи.'},
+  {s:'ai',l:'en',n:'Make.com',url:'https://make.com',t:['AI','автоматизація'],f:'інструмент',p:'безкоштовно',d:'No-code платформа автоматизацій без програмування — з\'єднує додатки між собою.'},
+  {s:'ai',l:'en',n:'Projector: AI for Productivity',url:'https://prjctr.com/course/ai-for-personal-productivity',t:['AI','автоматизація'],f:'курс',p:'платно',d:'Практичний курс — AI-інфраструктура для щоденних задач, автоматизація рутини, інтеграція між сервісами.'},
+  {s:'ai',l:'ua',n:'🧠 Як писати промпти',g:'prompts',t:['AI','для початківців'],f:'гайд',p:'безкоштовно',d:'Структура ефективного промпта: Роль → Задача → Контекст → Обмеження → Формат. З шаблоном і прикладами.'},
+  {s:'ai',l:'ua',n:'🗺 Карта AI-інструментів',g:'aimap',t:['AI'],f:'гайд',p:'безкоштовно',d:'4 категорії інструментів: Chat-інтерфейси, no-code, спеціалізовані, API — таблиця що коли обирати.'},
+  {s:'ai',l:'ua',n:'🔍 Як не дати AI себе обдурити',g:'aitrust',t:['AI','для початківців'],f:'гайд',p:'безкоштовно',d:'Що таке галюцинація, коли не довіряти без перевірки і як перевіряти — щоб AI справді допомагав.'},
+  {s:'ai',l:'ua',n:'🛠 AI у навчанні й роботі',g:'aiuse',t:['AI','для початківців'],f:'гайд',p:'безкоштовно',d:'Конкретні сценарії з готовими промптами: конспект, підготовка до іспиту, резюме, мозковий штурм.'},
+  {s:'ai',l:'ua',n:'🔒 AI безпечно і чесно',g:'aisafe',t:['AI'],f:'гайд',p:'безкоштовно',d:'Що не давати чат-ботам, академічна доброчесність і коли AI не замінює фахівця.'},
+  // ПРОДУКТИВНІСТЬ
+  {s:'productivity',l:'en',n:'Notion',url:'https://notion.so',t:['для початківців'],f:'інструмент',p:'безкоштовно',d:'Все в одному: нотатки, задачі, бази, плани. Безкоштовно для себе і повністю безкоштовно для студентів.'},
+  {s:'productivity',l:'en',n:'Obsidian',url:'https://obsidian.md',t:[],f:'інструмент',p:'безкоштовно',d:'Нотатки й база знань, що зберігаються локально в тебе — без хмари й передплат.'},
+  {s:'productivity',l:'en',n:'Todoist',url:'https://todoist.com',t:['для початківців'],f:'додаток',p:'безкоштовно',d:'Простий, але потужний список задач — щоб усе було в одному місці, а не в голові.'},
+  {s:'productivity',l:'en',n:'Google Calendar',url:'https://calendar.google.com',t:[],f:'інструмент',p:'безкоштовно',d:'Безкоштовний календар для time-blocking: плануєш не списком, а слотами в дні.'},
+  {s:'productivity',l:'en',n:'Forest',url:'https://forestapp.cc',t:['для початківців'],f:'додаток',p:'частково',d:'Фокус-таймер: садиш дерево на час концентрації — не чіпаєш телефон, поки воно росте.'},
+  {s:'productivity',l:'en',n:'Toggl Track',url:'https://toggl.com/track',t:[],f:'інструмент',p:'безкоштовно',d:'Облік часу — щоб побачити, куди реально йдуть твої години. Безкоштовно до 5 проєктів.'},
+  {s:'productivity',l:'ua',n:'⚡ Система продуктивності з нуля',g:'productivity',t:['для початківців'],f:'гайд',p:'безкоштовно',d:'6 принципів без фанатизму: одне місце для всього, time-blocking, одна головна задача на день.'},
+  // СТУДЕНТАМ
+  {s:'students',l:'en',n:'GitHub Student Developer Pack',url:'https://education.github.com/pack',t:['IT','міжнародне визнання'],f:'інструмент',p:'безкоштовно',d:'Десятки платних інструментів безкоштовно за студентським статусом — Copilot, домени, хмара.'},
+  {s:'students',l:'en',n:'Zotero',url:'https://zotero.org',t:[],f:'інструмент',p:'безкоштовно',d:'Менеджер джерел: збирає літературу й сам оформлює список використаних джерел для курсової чи диплому.'},
+  {s:'students',l:'en',n:'Overleaf',url:'https://overleaf.com',t:[],f:'інструмент',p:'частково',d:'Онлайн-редактор LaTeX — для якісного оформлення диплому, тез і наукових робіт.'},
+  {s:'students',l:'en',n:'Google Scholar',url:'https://scholar.google.com',t:[],f:'сайт',p:'безкоштовно',d:'Пошук наукових статей і книжок — основа для будь-якої академічної роботи. Мільйони джерел безкоштовно.'},
+  {s:'students',l:'en',n:'Connected Papers',url:'https://connectedpapers.com',t:[],f:'інструмент',p:'частково',d:'Будує візуальну карту досліджень за темою — швидко бачиш ключові праці й суміжні напрямки.'},
+  {s:'students',l:'en',n:'Grammarly',url:'https://grammarly.com',t:['англійська'],f:'інструмент',p:'частково',d:'Перевірка англомовних текстів на граматику й стиль — для есе, мотиваційних листів і заявок на гранти.'},
+  {s:'students',l:'en',n:'ISIC',url:'https://isic.org',t:['міжнародне визнання'],f:'інструмент',p:'частково',d:'Міжнародний студентський квиток — знижки на транспорт, музеї та сервіси в багатьох країнах.'},
+  {s:'students',l:'ua',n:'📖 Як вчитися ефективно',g:'studyguide',t:['для початківців'],f:'гайд',p:'безкоштовно',d:'Що реально працює за наукою: активне пригадування, інтервальне повторення, чергування тем.'},
+  // УКРАЇНСЬКЕ — від українців для українців
+  {s:'ukrainian',l:'ua',n:'Preply',url:'https://preply.com',t:['англійська'],f:'сайт',p:'частково',d:'Платформа для вивчення мов з репетиторами, заснована в Києві. Понад 50 мов, учні зі 180 країн — український продукт світового рівня.'},
+  {s:'ukrainian',l:'en',n:'Headway',url:'https://makeheadway.com',t:['для початківців'],f:'додаток',p:'частково',d:'Стислі викладки нонфікшн-книжок за 15 хвилин. Київський стартап — повний доступ безкоштовний для всіх користувачів з України.'},
+  {s:'ukrainian',l:'en',n:'MacPaw',url:'https://macpaw.com',t:[],f:'інструмент',p:'частково',d:'Київська компанія, відома CleanMyMac і Setapp. Продукти встановлені на 30+ млн пристроїв у 180+ країнах — кожен п\'ятий Mac у світі.'},
+  {s:'ukrainian',l:'en',n:'Readdle',url:'https://readdle.com',t:[],f:'інструмент',p:'частково',d:'Одеська компанія — застосунки для продуктивності Spark, Documents, PDF Expert. Один з піонерів App Store з України.'},
+  {s:'ukrainian',l:'en',n:'BetterMe',url:'https://betterme.world',t:[],f:'додаток',p:'частково',d:'Київська платформа велнесу — фітнес, ментальне здоров\'я, харчування. Один з найбільших health-застосунків світу.'},
+  {s:'ukrainian',l:'en',n:'Reface',url:'https://reface.ai',t:['AI'],f:'додаток',p:'частково',d:'Київський AI-застосунок для заміни облич у відео — свого часу №1 у App Store у десятках країн.'},
+  {s:'ukrainian',l:'en',n:'Respeecher',url:'https://respeecher.com',t:['AI'],f:'інструмент',p:'платно',d:'Київський стартап синтезу голосу — технологію використовували у Star Wars і кіно Голлівуду. Лауреат Emmy.'},
+  {s:'courses',l:'en',n:'Coursera',url:'https://coursera.org',t:['курси','сертифікат','міжнародне визнання'],f:'платформа',p:'частково',d:'Курси від університетів світу (Yale, Google, IBM). Є фінансова допомога — можна вчитись безкоштовно.'},
+  {s:'courses',l:'en',n:'edX',url:'https://edx.org',t:['курси','сертифікат','міжнародне визнання'],f:'платформа',p:'частково',d:'Курси від MIT, Harvard, Microsoft. Аудит (перегляд без сертифікату) — безкоштовно.'},
+  {s:'courses',l:'ua',n:'Prometheus',url:'https://prometheus.org.ua',t:['курси','українською','безкоштовно'],f:'платформа',p:'безкоштовно',d:'Українська платформа масових курсів від університетів — від програмування до психології, безкоштовно.'},
+  {s:'courses',l:'ua',n:'Ed-Era',url:'https://ed-era.com',t:['курси','українською'],f:'платформа',p:'безкоштовно',d:'Якісні курси українською — підготовка до ЄВІ, профорієнтація та інші напрямки. Доступно 24/7.'},
+  {s:'courses',l:'ua',n:'NAQA — реєстр програм',url:'https://naqa.gov.ua',t:['курси'],f:'сайт',p:'безкоштовно',d:'Офіційний реєстр акредитованих освітніх програм України — перевірити легітимність закладу.'},
   // МЕНТАЛЬНЕ
-  {s:'mental',n:'НПА — Реєстр психологів',url:'https://npa-ua.org/register/',t:['психологія','українською'],f:'сайт',p:'безкоштовно',d:'Офіційний реєстр Національної психологічної асоціації — всі члени мають підтверджену психологічну освіту або науковий ступінь. НПА — нац. представник України в EFPA.'},
-  {s:'mental',n:'УПА — Реєстр членів',url:'https://www.upa.guru/%D1%80%D0%B5%D1%94%D1%81%D1%82%D1%80-%D1%87%D0%BB%D0%B5%D0%BD%D1%96%D0%B2',t:['психологія','українською'],f:'сайт',p:'безкоштовно',d:'Реєстр Української психологічної асоціації — дійсні члени мають вищу психологічну освіту та досвід роботи в професії. Можна знайти і зв\'язатися напряму.'},
-  {s:'mental',n:'Гаряча лінія 1545',url:'tel:1545',t:['психологія','стрес','воєнний час','українською'],f:'гаряча лінія',p:'безкоштовно',d:'Урядова лінія психологічної підтримки 24/7 — безкоштовно для всіх українців.'},
-  {s:'mental',n:'Headspace',url:'https://headspace.com',t:['психологія','стрес'],f:'додаток',p:'частково',d:'Медитації, дихальні вправи, програми для сну — науково обґрунтований підхід до ментального здоров\'я.'},
-  {s:'mental',n:'Woebot',url:'https://woebot.io',t:['психологія','стрес','для початківців'],f:'додаток',p:'безкоштовно',d:'AI-бот на основі КПТ — допомагає з тривогою і негативними думками через короткі щоденні діалоги.'},
+  {s:'mental',l:'ua',n:'НПА — Реєстр психологів',url:'https://npa-ua.org/register/',t:['психологія','українською'],f:'сайт',p:'безкоштовно',d:'Офіційний реєстр Національної психологічної асоціації — всі члени мають підтверджену психологічну освіту або науковий ступінь. НПА — нац. представник України в EFPA.'},
+  {s:'mental',l:'ua',n:'УПА — Реєстр членів',url:'https://www.upa.guru/%D1%80%D0%B5%D1%94%D1%81%D1%82%D1%80-%D1%87%D0%BB%D0%B5%D0%BD%D1%96%D0%B2',t:['психологія','українською'],f:'сайт',p:'безкоштовно',d:'Реєстр Української психологічної асоціації — дійсні члени мають вищу психологічну освіту та досвід роботи в професії. Можна знайти і зв\'язатися напряму.'},
+  {s:'mental',l:'ua',n:'Гаряча лінія 1545',url:'tel:1545',t:['психологія','стрес','воєнний час','українською'],f:'гаряча лінія',p:'безкоштовно',d:'Урядова лінія психологічної підтримки 24/7 — безкоштовно для всіх українців.'},
+  {s:'mental',l:'en',n:'Headspace',url:'https://headspace.com',t:['психологія','стрес'],f:'додаток',p:'частково',d:'Медитації, дихальні вправи, програми для сну — науково обґрунтований підхід до ментального здоров\'я.'},
+  {s:'mental',l:'ua',n:'Розкажи мені',url:'https://tellme.com.ua',t:['психологія','стрес','воєнний час','українською'],f:'сайт',p:'безкоштовно',d:'Безкоштовна платформа психологічної допомоги для українців 24/7 — сертифіковані фахівці за методом КПТ. Підтримка UNICEF та клініки Charité.'},
   // ФІНАНСИ
-  {s:'finance',n:'Monefy',url:'https://monefy.me',t:['бюджет','для початківців'],f:'додаток',p:'безкоштовно',d:'Простий трекер витрат — звикнути вести бюджет за 5 хвилин на день. Відмінна точка старту.'},
-  {s:'finance',n:'Investopedia',url:'https://investopedia.com',t:['інвестиції','для початківців'],f:'сайт',p:'безкоштовно',d:'Найкращий словник фінансових понять — від акцій до криптовалюти. Перед будь-яким рішенням — заглянути сюди.'},
+  {s:'finance',l:'en',n:'Monefy',url:'https://monefy.me',t:['бюджет','для початківців'],f:'додаток',p:'безкоштовно',d:'Простий трекер витрат — звикнути вести бюджет за 5 хвилин на день. Відмінна точка старту.'},
+  {s:'finance',l:'en',n:'Investopedia',url:'https://investopedia.com',t:['інвестиції','для початківців'],f:'сайт',p:'безкоштовно',d:'Найкращий словник фінансових понять — від акцій до криптовалюти. Перед будь-яким рішенням — заглянути сюди.'},
   // МОЖЛИВОСТІ
-  {s:'opps',n:'Erasmus+',url:'https://erasmus.org.ua',t:['гранти','волонтерство','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Обміни, волонтерство, молодіжні проєкти в Європі — більшість програм покривають витрати повністю.'},
-  {s:'opps',n:'Chevening',url:'https://chevening.org',t:['гранти','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Стипендія уряду Великої Британії на магістратуру — повне фінансування: навчання, житло, квитки.'},
-  {s:'opps',n:'DAAD (для українців)',url:'https://daad.de/uk',t:['гранти','міжнародне визнання','воєнний час'],f:'сайт',p:'безкоштовно',d:'Стипендії та програми для українців у Германії — є спеціальні умови через воєнний стан.'},
-  {s:'opps',n:'Devpost',url:'https://devpost.com',t:['гранти','IT'],f:'сайт',p:'безкоштовно',d:'Платформа міжнародних хакатонів — змагання з призами, досвідом і нетворкінгом. Є онлайн-формат.'},
+  {s:'opps',l:'ua',n:'Erasmus+',url:'https://erasmus.org.ua',t:['гранти','волонтерство','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Обміни, волонтерство, молодіжні проєкти в Європі — більшість програм покривають витрати повністю.'},
+  {s:'opps',l:'en',n:'Chevening',url:'https://chevening.org',t:['гранти','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Стипендія уряду Великої Британії на магістратуру — повне фінансування: навчання, житло, квитки.'},
+  {s:'opps',l:'en',n:'DAAD (для українців)',url:'https://daad.de/uk',t:['гранти','міжнародне визнання','воєнний час'],f:'сайт',p:'безкоштовно',d:'Стипендії та програми для українців у Германії — є спеціальні умови через воєнний стан.'},
+  {s:'opps',l:'en',n:'Devpost',url:'https://devpost.com',t:['гранти','IT'],f:'сайт',p:'безкоштовно',d:'Платформа міжнародних хакатонів — змагання з призами, досвідом і нетворкінгом. Є онлайн-формат.'},
   // КУЛЬТУРА ТА ПОДІЇ
-  {s:'culture',n:'Київський молодіжний центр',url:'https://www.kyc.kiev.ua/',t:['культура','українською','воєнний час'],f:'сайт',p:'безкоштовно',d:'Простір для молоді в серці Києва — культурні події, дискусії, творчі зустрічі та підтримка спільноти. Хрещатик 10.'},
-  {s:'culture',n:'🎭 Поезія, написана війною',url:'https://docs.google.com/forms/d/1C_fJZlVxNYpkUGIpep4O6ZVOybQOald23lSJjrqbZkc/viewform?edit_requested=true',t:['культура','воєнний час','українською'],f:'подія',p:'безкоштовно',d:'6 червня · 15:30–17:30 · Хрещатик 10. Культурологічний захід про сучасну українську поезію — як слово фіксує реальність війни, допомагає проживати втрати і формує культурну відповідь на виклики часу.'},
+  {s:'culture',l:'ua',n:'Київський молодіжний центр',url:'https://www.kyc.kiev.ua/',t:['культура','українською','воєнний час'],f:'сайт',p:'безкоштовно',d:'Простір для молоді в серці Києва — культурні події, дискусії, творчі зустрічі та підтримка спільноти. Хрещатик 10.'},
+  {s:'culture',l:'ua',n:'🎭 Поезія, написана війною',url:'https://docs.google.com/forms/d/1C_fJZlVxNYpkUGIpep4O6ZVOybQOald23lSJjrqbZkc/viewform?edit_requested=true',t:['культура','воєнний час','українською'],f:'подія',p:'безкоштовно',d:'6 червня · 15:30–17:30 · Хрещатик 10. Культурологічний захід про сучасну українську поезію — як слово фіксує реальність війни, допомагає проживати втрати і формує культурну відповідь на виклики часу.'},
 ];
 
 let curSec='all', curQF='all', curQ='';
@@ -394,7 +571,12 @@ function init(){
   // Modal
   document.getElementById('mclose').addEventListener('click',closeM);
   document.getElementById('mover').addEventListener('click',e=>{if(e.target===e.currentTarget)closeM();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+  // Suggest modal
+  const sm=document.getElementById('suggestModal');
+  document.getElementById('suggestBtn').addEventListener('click',()=>{sm.style.display='flex';setTimeout(()=>sm.style.opacity=1,10);document.body.style.overflow='hidden';});
+  document.getElementById('suggestClose').addEventListener('click',()=>{sm.style.opacity=0;setTimeout(()=>{sm.style.display='none';},200);document.body.style.overflow='';});
+  sm.addEventListener('click',e=>{if(e.target===e.currentTarget){sm.style.opacity=0;setTimeout(()=>{sm.style.display='none';},200);document.body.style.overflow='';}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();sm.style.opacity=0;setTimeout(()=>{sm.style.display='none';},200);document.body.style.overflow='';}});
 }
 
 function buildNav(){
@@ -438,13 +620,14 @@ function buildCards(){
   grid.innerHTML=list.map((r,i)=>{
     const sec=SEC[r.s];
     const pc=r.p==='безкоштовно'?'bfree':r.p==='частково'?'bpart':'bpaid';
+    const lang=r.l==='ua'?'<span class="b blang">🇺🇦 укр</span>':'<span class="b blang">🇬🇧 eng</span>';
     const btn=r.g
       ?`<button class="cbtn" onclick="openG('${r.g}')">Відкрити гайд ↗</button>`
       :`<a class="cbtn" href="${r.url}" target="_blank" rel="noopener">Перейти →</a>`;
     return `<div class="card" style="--ac:${sec.color};animation-delay:${i*.035}s">
       <div class="ctop">
         <div class="cicon">${sec.label.split(' ')[0]}</div>
-        <div class="cbadges"><span class="b bfmt">${r.f}</span><span class="b ${pc}">${r.p}</span></div>
+        <div class="cbadges">${lang}<span class="b bfmt">${r.f}</span><span class="b ${pc}">${r.p}</span></div>
       </div>
       <div class="ctitle">${r.n}</div>
       <div class="cdesc">${r.d}</div>
