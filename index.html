@@ -757,6 +757,14 @@ function buildNav(){
   });
   // init "all" active style
   nav.querySelector('[data-s="all"]').style.cssText='background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff';
+  // Convert vertical wheel to horizontal scroll on laptop/desktop
+  nav.addEventListener('wheel',e=>{
+    if(nav.scrollWidth<=nav.clientWidth)return;
+    const delta=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;
+    if(delta===0)return;
+    e.preventDefault();
+    nav.scrollLeft+=delta;
+  },{passive:false});
 }
 
 function filter(){
