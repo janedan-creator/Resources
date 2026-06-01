@@ -148,34 +148,6 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
 .tg-btn{display:inline-flex;align-items:center;gap:8px;background:#2563eb;border:none;border-radius:40px;padding:12px 24px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#fff;text-decoration:none;cursor:pointer;transition:all .2s;margin-top:16px}
 .tg-btn:hover{background:#1d4ed8;transform:translateY(-1px)}
 
-/* ── JOB TRACKER ── */
-.tk-overlay{position:fixed;inset:0;z-index:210;background:rgba(0,0,0,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .2s}
-.tk-overlay.on{display:flex;opacity:1}
-.tk-box{background:rgba(12,12,24,.97);border:1px solid rgba(255,255,255,.12);border-radius:22px;width:100%;max-width:1120px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;animation:min .28s cubic-bezier(.23,1,.32,1)}
-.tk-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border)}
-.tk-head h2{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;color:#fff}
-.tk-close{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border);color:var(--text-2);font-size:13px;cursor:pointer;flex-shrink:0}
-.tk-close:hover{background:rgba(255,255,255,.14);color:#fff}
-.tk-toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:13px 24px;border-bottom:1px solid var(--border)}
-.tk-btn{background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:40px;padding:7px 15px;font-size:12.5px;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-.tk-btn:hover{background:rgba(255,255,255,.14)}
-.tk-btn.primary{background:linear-gradient(135deg,#7c3aed,#2563eb);border:none;color:#fff;font-weight:600}
-.tk-btn.danger:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#fca5a5}
-.tk-btn input{display:none}
-.tk-tablewrap{overflow:auto;flex:1;padding:0 24px}
-.tk-table{width:100%;border-collapse:collapse;min-width:900px;margin:14px 0}
-.tk-table th{text-align:left;padding:8px 10px;font-size:10.5px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#0c0c18;z-index:2}
-.tk-table td{padding:4px 5px;border-bottom:1px solid rgba(255,255,255,.05)}
-.tk-table input,.tk-table select{width:100%;background:rgba(255,255,255,.04);border:1px solid transparent;border-radius:8px;padding:7px 9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12.5px;outline:none;transition:all .15s}
-.tk-table input:focus,.tk-table select:focus{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
-.tk-table input::placeholder{color:var(--text-3)}
-.tk-table select{cursor:pointer;font-weight:600}
-.tk-table select option{background:#16162a;color:#fff;font-weight:500}
-.tk-del{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;width:30px;height:32px;color:var(--text-3);cursor:pointer;font-size:12px;transition:all .15s}
-.tk-del:hover{background:rgba(239,68,68,.2);color:#fca5a5;border-color:rgba(239,68,68,.4)}
-.tk-empty{text-align:center;color:var(--text-3);padding:44px 20px;font-size:13px}
-.tk-hint{padding:12px 24px;font-size:11.5px;color:var(--text-3);border-top:1px solid var(--border);line-height:1.5}
-
 /* ── MOBILE PERFORMANCE ── */
 @media(max-width:768px){
   .orb{filter:blur(60px);opacity:.2;animation:none}
@@ -219,7 +191,7 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
     <h1 class="htitle">Бібліотека<br>ресурсів</h1>
     <p class="hsub">Перевірені матеріали для розвитку, кар'єри та добробуту — зібрані в одному місці</p>
     <div class="hstats">
-      <span class="stat">86 ресурсів</span>
+      <span class="stat">113 ресурсів</span>
       <span class="stat">12 розділів</span>
       <span class="stat">18 гайдів</span>
     </div>
@@ -262,30 +234,6 @@ footer{position:relative;z-index:1;text-align:center;padding:28px 24px;border-to
 
 <button class="suggest-fab" id="suggestBtn">💌 Запропонувати ресурс</button>
 
-<div class="tk-overlay" id="tkOverlay">
-  <div class="tk-box">
-    <div class="tk-head">
-      <h2>📊 Трекер відгуків на вакансії</h2>
-      <button class="tk-close" id="tkClose">✕</button>
-    </div>
-    <div class="tk-toolbar">
-      <button class="tk-btn primary" onclick="tkAdd()">+ Додати рядок</button>
-      <button class="tk-btn" onclick="tkExport()">⬇ Експорт CSV</button>
-      <label class="tk-btn">⬆ Імпорт CSV<input type="file" accept=".csv" onchange="tkImport(event)"></label>
-      <button class="tk-btn danger" onclick="tkClear()">🗑 Очистити все</button>
-    </div>
-    <div class="tk-tablewrap">
-      <table class="tk-table">
-        <thead><tr>
-          <th>Вакансія</th><th>Зарплата</th><th>Компанія</th><th>Статус</th>
-          <th>Дата подачі</th><th>Посилання</th><th>Нотатки</th><th></th>
-        </tr></thead>
-        <tbody id="tkBody"></tbody>
-      </table>
-    </div>
-    <p class="tk-hint">💾 Дані зберігаються у твоєму браузері на цьому пристрої. Натисни «Експорт CSV» щоб відкрити таблицю в Excel або Google Sheets і забрати з собою.</p>
-  </div>
-</div>
 
 <script>
 const SEC={
@@ -622,6 +570,13 @@ const RES=[
   {s:'english',l:'en',n:'Anki',url:'https://apps.ankiweb.net',t:['англійська','для початківців'],f:'додаток',p:'безкоштовно',d:'Картки на основі інтервального повторення — науково обґрунтований спосіб запам\'ятовувати слова.'},
   {s:'english',l:'en',n:'IELTS.org',url:'https://ielts.org',t:['англійська','сертифікат','міжнародне визнання'],f:'сайт',p:'безкоштовно',d:'Офіційний сайт іспиту — безкоштовні зразки завдань, формати тестів, підготовчі матеріали.'},
   {s:'english',l:'en',n:'Cambridge English',url:'https://cambridgeenglish.org/learning-english',t:['англійська','сертифікат'],f:'сайт',p:'безкоштовно',d:'Офіційна підготовка до B2 First, C1 Advanced — тести, граматика, словник від Cambridge.'},
+  {s:'english',l:'en',n:'Language Transfer',url:'https://languagetransfer.org',t:['англійська','для початківців'],f:'курс',p:'безкоштовно',d:'Безкоштовні аудіо-курси, де тебе вчать думати мовою, а не зубрити. Культовий метод серед поліглотів, майже невідомий ширше.'},
+  {s:'english',l:'en',n:'Language Reactor',url:'https://languagereactor.com',t:['англійська'],f:'інструмент',p:'частково',d:'Подвійні субтитри для Netflix і YouTube + переклад по кліку. Геніально щоб вчити мову, дивлячись серіали.'},
+  {s:'english',l:'en',n:'YouGlish',url:'https://youglish.com',t:['англійська'],f:'інструмент',p:'безкоштовно',d:'Вводиш слово чи фразу — чуєш, як її вимовляють у сотнях реальних відео (US/UK/AUS). Скарб для постановки вимови.'},
+  {s:'english',l:'en',n:'Cambridge Write & Improve',url:'https://writeandimprove.com',t:['англійська'],f:'інструмент',p:'безкоштовно',d:'Пишеш текст — за секунди отримуєш свій рівень CEFR (A1–C2) і що покращити. Безкоштовний і дуже недооцінений тренажер письма.'},
+  {s:'english',l:'en',n:'Clozemaster',url:'https://clozemaster.com',t:['англійська'],f:'додаток',p:'частково',d:'Вчиш слова в реченнях методом пропусків, за частотністю вживання. Добре працює після базового рівня.'},
+  {s:'english',l:'en',n:'Readlang',url:'https://readlang.com',t:['англійська'],f:'інструмент',p:'частково',d:'Розширення для браузера: клікаєш будь-яке слово на сайті — отримуєш переклад, який далі йде у флешкартки.'},
+  {s:'english',l:'en',n:'Duolingo',url:'https://duolingo.com',t:['англійська','для початківців'],f:'додаток',p:'частково',d:'Гейміфіковані уроки для звички й бази — зручно почати. Але не дає ілюзії, що цього достатньо для вільної розмови.'},
   // ПОШУК РОБОТИ
   {s:'jobs',l:'ua',n:'Work.ua',url:'https://work.ua',t:['пошук роботи','українською','для початківців'],f:'сайт',p:'безкоштовно',d:'Найбільший укр. джоб-борд — стажування, перша робота, конструктор резюме та поради кар\'єрного зростання.'},
   {s:'jobs',l:'ua',n:'Happy Monday',url:'https://happymonday.ua',t:['пошук роботи','українською'],f:'сайт',p:'безкоштовно',d:'Платформа для тих, хто шукає роботу з цінностями та смислом — вакансії у прогресивних українських компаніях + кар\'єрні матеріали.'},
@@ -647,7 +602,14 @@ const RES=[
   {s:'jobs',l:'ua',n:'🚀 Перша робота: від нуля до офера',g:'firstjob',t:['пошук роботи','для початківців'],f:'гайд',p:'безкоштовно',d:'Що вважається досвідом, куди дивитися, як скласти резюме без досвіду і що робити в перші 90 днів.'},
   {s:'jobs',l:'ua',n:'🔄 Зміна кар\'єри: гайд для світчерів',g:'switcher',t:['пошук роботи'],f:'гайд',p:'безкоштовно',d:'Як зрозуміти що переноситься, обрати напрямок не за хайпом і збудувати міст, а не стрибати в прірву.'},
   {s:'jobs',l:'ua',n:'Jooble — зарплати',url:'https://ua.jooble.org/salary',t:['пошук роботи','українською'],f:'інструмент',p:'безкоштовно',d:'Перевірити середню зарплату за посадою в Україні — корисно для дослідження ринку і перемовин про офер.'},
-  {s:'jobs',l:'ua',n:'📊 Трекер відгуків на вакансії',tk:true,t:['пошук роботи','для початківців'],f:'трекер',p:'безкоштовно',d:'Відстежуй усі відгуки в одному місці: вакансія, зарплата, компанія, статус, дата, посилання, нотатки. Зберігається в браузері + експорт у CSV/Excel.'},
+  {s:'jobs',l:'en',n:'📊 Трекер відгуків (Notion)',url:'https://www.notion.com/templates/internship-job-application-tracker',t:['пошук роботи','для початківців'],f:'шаблон',p:'безкоштовно',d:'Готовий Notion-шаблон для відстеження відгуків на вакансії та стажування — статус, компанія, дата, нотатки. Дублюєш собі й заповнюєш.'},
+  {s:'jobs',l:'ua',n:'Robota.ua',url:'https://robota.ua',t:['пошук роботи','українською','для початківців'],f:'сайт',p:'безкоштовно',d:'Один з найбільших джоб-бордів України поряд з Work.ua — вакансії в усіх сферах, від першої роботи до керівних позицій.'},
+  {s:'jobs',l:'en',n:'Wellfound',url:'https://wellfound.com',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Вакансії у стартапах і на віддаленій роботі (раніше AngelList) — прямий контакт із засновниками, багато tech-ролей.'},
+  {s:'jobs',l:'en',n:'Tech Interview Handbook',url:'https://techinterviewhandbook.org',t:['співбесіда','IT','для початківців'],f:'сайт',p:'безкоштовно',d:'Безплатний детальний гайд від екс-інженера Meta: як готуватись до співбесід з нуля, що питають, відомий список Blind 75. Корисно й нетехнічним.'},
+  {s:'jobs',l:'ua',n:'EPAM Campus',url:'https://campus.epam.ua',t:['IT','курси','для початківців','українською'],f:'платформа',p:'безкоштовно',d:'Безкоштовні навчальні програми та кар\'єрні матеріали для входу в IT від EPAM — українською, з практичними завданнями.'},
+  {s:'jobs',l:'en',n:'Teal',url:'https://tealhq.com',t:['резюме','пошук роботи'],f:'інструмент',p:'частково',d:'2-в-1: трекер відгуків + конструктор резюме, який підганяє його під конкретну вакансію. Щедрий безкоштовний тариф.'},
+  {s:'jobs',l:'en',n:'Levels.fyi',url:'https://levels.fyi',t:['пошук роботи','IT'],f:'сайт',p:'безкоштовно',d:'Реальні зарплати за компанією, рівнем і містом + детальний гайд з переговорів про офер. Незамінне перед торгом про зарплату.'},
+  {s:'jobs',l:'en',n:'Ten Rules for Negotiating a Job Offer',url:'https://haseebq.com/how-to-negotiate-your-job-offer/',t:['пошук роботи'],f:'стаття',p:'безкоштовно',d:'Легендарне есе Haseeb Qureshi — психологія торгу про зарплату від колишнього покериста. Маст-рід перед прийняттям оферу.'},
   {s:'jobs',l:'ua',n:'🔎 Де шукати роботу без досвіду',g:'nojob',t:['пошук роботи','для початківців'],f:'гайд',p:'безкоштовно',d:'Конкретні розділи й фільтри для першої роботи (DOU, Happy Monday, Djinni), за якими словами шукати і що вважається досвідом.'},
   {s:'jobs',l:'ua',n:'🚩 Червоні прапорці роботодавця',g:'employerrf',t:['співбесіда','пошук роботи'],f:'гайд',p:'безкоштовно',d:'Як розпізнати токсичну компанію ще на співбесіді: ухильні відповіді, маркери переробок, які питання ставити і де перевірити.'},
   {s:'jobs',l:'ua',n:'📄 Як перевірити резюме',g:'resumecheck',t:['резюме','для початківців'],f:'гайд',p:'безкоштовно',d:'6 кроків перед надсиланням: унікальність під вакансію, здобутки замість обов\'язків, помилки, локація, правдивість. За матеріалами Дія.'},
@@ -660,6 +622,9 @@ const RES=[
   {s:'ai',l:'en',n:'Perplexity AI',url:'https://perplexity.ai',t:['AI'],f:'інструмент',p:'безкоштовно',d:'AI-пошук з посиланнями на джерела — замінює Google коли потрібно дослідити тему і перевірити факти.'},
   {s:'ai',l:'en',n:'Gamma',url:'https://gamma.app',t:['AI','фріланс'],f:'інструмент',p:'безкоштовно',d:'Створює презентації та документи через AI за лічені хвилини — для навчання і роботи.'},
   {s:'ai',l:'en',n:'Make.com',url:'https://make.com',t:['AI','автоматизація'],f:'інструмент',p:'безкоштовно',d:'No-code платформа автоматизацій без програмування — з\'єднує додатки між собою.'},
+  {s:'ai',l:'en',n:'NotebookLM',url:'https://notebooklm.google.com',t:['AI','курси'],f:'інструмент',p:'безкоштовно',d:'Завантажуєш свої PDF, нотатки й посилання — AI відповідає тільки за ними, без вигадок. Audio Overview робить подкаст-переказ матеріалів. Ідеально для навчання.'},
+  {s:'ai',l:'en',n:'Anthropic Prompt Library',url:'https://docs.claude.com/en/resources/prompt-library/library',t:['AI','промптинг'],f:'сайт',p:'безкоштовно',d:'60+ якісних офіційних шаблонів промптів під різні задачі від Anthropic — творців Claude.'},
+  {s:'ai',l:'en',n:'Awesome ChatGPT Prompts',url:'https://github.com/f/awesome-chatgpt-prompts',t:['AI','промптинг'],f:'сайт',p:'безкоштовно',d:'Велика спільнотна колекція рольових промптів «act as…» на GitHub — готові заготовки під будь-яку задачу.'},
   {s:'ai',l:'en',n:'Projector: AI for Productivity',url:'https://prjctr.com/course/ai-for-personal-productivity',t:['AI','автоматизація'],f:'курс',p:'платно',d:'Практичний курс — AI-інфраструктура для щоденних задач, автоматизація рутини, інтеграція між сервісами.'},
   {s:'ai',l:'ua',n:'🧠 Як писати промпти',g:'prompts',t:['AI','для початківців'],f:'гайд',p:'безкоштовно',d:'Структура ефективного промпта: Роль → Задача → Контекст → Обмеження → Формат. З шаблоном і прикладами.'},
   {s:'ai',l:'ua',n:'🗺 Карта AI-інструментів',g:'aimap',t:['AI'],f:'гайд',p:'безкоштовно',d:'4 категорії інструментів: Chat-інтерфейси, no-code, спеціалізовані, API — таблиця що коли обирати.'},
@@ -673,6 +638,7 @@ const RES=[
   {s:'productivity',l:'en',n:'Google Calendar',url:'https://calendar.google.com',t:[],f:'інструмент',p:'безкоштовно',d:'Безкоштовний календар для time-blocking: плануєш не списком, а слотами в дні.'},
   {s:'productivity',l:'en',n:'Forest',url:'https://forestapp.cc',t:['для початківців'],f:'додаток',p:'частково',d:'Фокус-таймер: садиш дерево на час концентрації — не чіпаєш телефон, поки воно росте.'},
   {s:'productivity',l:'en',n:'Toggl Track',url:'https://toggl.com/track',t:[],f:'інструмент',p:'безкоштовно',d:'Облік часу — щоб побачити, куди реально йдуть твої години. Безкоштовно до 5 проєктів.'},
+  {s:'productivity',l:'en',n:'Thinkii',url:'https://thinkii.app',t:['для початківців'],f:'додаток',p:'частково',d:'Плануєш голосом: наговорюєш думки — AI сам перетворює їх на чіткі задачі. Створений під «гучний розум» і людей з СДУГ, без тиску й нагадувань-докорів.'},
   {s:'productivity',l:'ua',n:'⚡ Система продуктивності з нуля',g:'productivity',t:['для початківців'],f:'гайд',p:'безкоштовно',d:'6 принципів без фанатизму: одне місце для всього, time-blocking, одна головна задача на день.'},
   // СТУДЕНТАМ
   {s:'students',l:'en',n:'GitHub Student Developer Pack',url:'https://education.github.com/pack',t:['IT','міжнародне визнання'],f:'інструмент',p:'безкоштовно',d:'Десятки платних інструментів безкоштовно за студентським статусом — Copilot, домени, хмара.'},
@@ -682,6 +648,7 @@ const RES=[
   {s:'students',l:'en',n:'Connected Papers',url:'https://connectedpapers.com',t:[],f:'інструмент',p:'частково',d:'Будує візуальну карту досліджень за темою — швидко бачиш ключові праці й суміжні напрямки.'},
   {s:'students',l:'en',n:'Grammarly',url:'https://grammarly.com',t:['англійська'],f:'інструмент',p:'частково',d:'Перевірка англомовних текстів на граматику й стиль — для есе, мотиваційних листів і заявок на гранти.'},
   {s:'students',l:'en',n:'ISIC',url:'https://isic.org',t:['міжнародне визнання'],f:'інструмент',p:'частково',d:'Міжнародний студентський квиток — знижки на транспорт, музеї та сервіси в багатьох країнах.'},
+  {s:'students',l:'en',n:'Elicit',url:'https://elicit.com',t:['AI'],f:'інструмент',p:'частково',d:'AI-асистент для роботи з науковими статтями — знаходить дослідження, витягує ключові висновки, допомагає з оглядом літератури.'},
   {s:'students',l:'ua',n:'📖 Як вчитися ефективно',g:'studyguide',t:['для початківців'],f:'гайд',p:'безкоштовно',d:'Що реально працює за наукою: активне пригадування, інтервальне повторення, чергування тем.'},
   // УКРАЇНСЬКЕ — від українців для українців
   {s:'ukrainian',l:'ua',n:'Preply',url:'https://preply.com',t:['англійська'],f:'сайт',p:'частково',d:'Платформа для вивчення мов з репетиторами, заснована в Києві. Понад 50 мов, учні зі 180 країн — український продукт світового рівня.'},
@@ -702,6 +669,13 @@ const RES=[
   {s:'mental',l:'ua',n:'Гаряча лінія 1545',url:'tel:1545',t:['психологія','стрес','воєнний час','українською'],f:'гаряча лінія',p:'безкоштовно',d:'Урядова лінія психологічної підтримки 24/7 — безкоштовно для всіх українців.'},
   {s:'mental',l:'en',n:'Headspace',url:'https://headspace.com',t:['психологія','стрес'],f:'додаток',p:'частково',d:'Медитації, дихальні вправи, програми для сну — науково обґрунтований підхід до ментального здоров\'я.'},
   {s:'mental',l:'ua',n:'Розкажи мені',url:'https://tellme.com.ua',t:['психологія','стрес','воєнний час','українською'],f:'сайт',p:'безкоштовно',d:'Безкоштовна платформа психологічної допомоги для українців 24/7 — сертифіковані фахівці за методом КПТ. Підтримка UNICEF та клініки Charité.'},
+  {s:'mental',l:'ua',n:'Ти як?',url:'https://howareu.com',t:['психологія','стрес','воєнний час','українською'],f:'сайт',p:'безкоштовно',d:'Національна платформа ментального здоров\'я: доказові техніки самодопомоги, гарячі лінії та каталог перевірених психологів. Найкраща стартова точка українською.'},
+  {s:'mental',l:'ua',n:'Lifeline Ukraine 7333',url:'tel:7333',t:['психологія','стрес','воєнний час','українською'],f:'гаряча лінія',p:'безкоштовно',d:'Лінія емоційної підтримки та запобігання самогубствам — цілодобово, безкоштовно, анонімно. Дзвінок на 7333.'},
+  {s:'mental',l:'ua',n:'Treatfield',url:'https://treatfield.com',t:['психологія','українською'],f:'сайт',p:'платно',d:'Українська платформа, що підбирає перевірених терапевтів для роботи онлайн — прозоро, з детальними анкетами фахівців.'},
+  {s:'mental',l:'en',n:'How We Feel',url:'https://howwefeel.org',t:['психологія','стрес'],f:'додаток',p:'безкоштовно',d:'Безкоштовний трекер емоцій без реклами від науковців Yale — точний «словник почуттів» і техніки регуляції. Один з найякісніших у класі.'},
+  {s:'mental',l:'en',n:'Finch',url:'https://finchcare.com',t:['психологія','стрес','для початківців'],f:'додаток',p:'частково',d:'Турбота про себе через піклування про віртуальне пташеня: щоденні чек-іни, дихання, маленькі цілі. Люблять за м\'якість і необтяжливість.'},
+  {s:'mental',l:'en',n:'Insight Timer',url:'https://insighttimer.com',t:['психологія','стрес'],f:'додаток',p:'безкоштовно',d:'Найбільша безкоштовна бібліотека медитацій, практик і звуків для сну.'},
+  {s:'mental',l:'en',n:'self-compassion.org',url:'https://self-compassion.org',t:['психологія'],f:'сайт',p:'безкоштовно',d:'Безкоштовні аудіо-практики самоспівчуття від Крістін Нефф — дослідниці №1 у цій темі.'},
   // ФІНАНСИ
   {s:'finance',l:'en',n:'Monefy',url:'https://monefy.me',t:['бюджет','для початківців'],f:'додаток',p:'безкоштовно',d:'Простий трекер витрат — звикнути вести бюджет за 5 хвилин на день. Відмінна точка старту.'},
   {s:'finance',l:'en',n:'Investopedia',url:'https://investopedia.com',t:['інвестиції','для початківців'],f:'сайт',p:'безкоштовно',d:'Найкращий словник фінансових понять — від акцій до криптовалюти. Перед будь-яким рішенням — заглянути сюди.'},
@@ -789,9 +763,7 @@ function buildCards(){
     const sec=SEC[r.s];
     const pc=r.p==='безкоштовно'?'bfree':r.p==='частково'?'bpart':'bpaid';
     const lang=r.l==='ua'?'<span class="b blang">укр</span>':'<span class="b blang">eng</span>';
-    const btn=r.tk
-      ?`<button class="cbtn" onclick="tkOpen()">Відкрити трекер ↗</button>`
-      :r.g
+    const btn=r.g
       ?`<button class="cbtn" onclick="openG('${r.g}')">Відкрити гайд ↗</button>`
       :`<a class="cbtn" href="${r.url}" target="_blank" rel="noopener">Перейти →</a>`;
     return `<div class="card" style="--ac:${sec.color};animation-delay:${i*.035}s">
